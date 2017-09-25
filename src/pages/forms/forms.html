@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar color="app">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{current_farmer.name}} ({{form_name}})</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content scroll="false">
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo" style="background: url('../assets/img/images.jpg') repeat transparent;"></div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
+        <div padding>
+            <ion-card-header>
+              <h1><small>Total : </small>89.4</h1>
+            </ion-card-header>
+            <ion-card>
+              <ion-card-header>
+                Form 1
+                <ion-badge item-end color="{{ points.item1 <= 10 ? 'danger' : (points.item1 >= 50 ? 'secondary' : 'primary') }}">{{points.item1}}%</ion-badge>
+
+              </ion-card-header>
+              <ion-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                Form 2
+                <ion-badge item-end color="{{ points.item2 <= 10 ? 'danger' : (points.item2 >= 50 ? 'secondary' : 'primary') }}">{{points.item2}}%</ion-badge>
+              </ion-card-header>
+              <ion-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                Form 3
+                <ion-badge item-end color="{{ points.item3 <= 10 ? 'danger' : (points.item3 >= 50 ? 'secondary' : 'primary') }}">{{points.item3}}%</ion-badge>
+              </ion-card-header>
+              <ion-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                Form 4
+                <ion-badge item-end color="{{ points.item4 <= 10 ? 'danger' : (points.item4 >= 50 ? 'secondary' : 'primary') }}">{{points.item4}}%</ion-badge>
+              </ion-card-header>
+              <ion-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                Form 5
+                <ion-badge item-end color="{{ points.item5 <= 10 ? 'danger' : (points.item5 >= 50 ? 'secondary' : 'primary') }}">{{points.item5}}%</ion-badge>
+              </ion-card-header>
+              <ion-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              </ion-card-content>
+            </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

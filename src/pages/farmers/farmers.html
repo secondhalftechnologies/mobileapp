@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="app">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Farmers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="list-avatar-page">
+  <ion-list>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list-header>Your Farmers</ion-list-header>
+
+    <ion-item-sliding *ngFor="let farmer of items" (click)="itemTapped($event, farmer)">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/img/{{farmer.image}}">
+        </ion-avatar>
+        <h2 color="app">{{farmer.name}}</h2>
+        <p>{{farmer.address}}</p>
+        <ion-note item-end>{{farmer.points}} %</ion-note>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" icon-start>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>

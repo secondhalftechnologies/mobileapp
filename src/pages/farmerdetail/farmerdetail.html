@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="app">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{current_farmer.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content scroll="false">
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo" style="background: url('../assets/img/images.jpg') repeat transparent;"></div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
+        <div padding>
+            <ion-card-header>
+              {{current_farmer.name}}
+            </ion-card-header>
+
+            <ion-list>
+              <button ion-item (click)="showForm('kyc')">
+                <ion-icon name="contact" item-start></ion-icon>
+                KYC
+                <ion-badge item-end color="{{ points.item1 <= 10 ? 'danger' : (points.item1 >= 50 ? 'secondary' : 'primary') }}">{{points.item1}}%</ion-badge>
+              </button>
+
+              <button ion-item (click)="showForm('Land details')">
+                <ion-icon name="globe" item-start></ion-icon>
+                Land details
+                <ion-badge item-end color="{{ points.item2 <= 10 ? 'danger' : (points.item2 >= 50 ? 'secondary' : 'primary') }}">{{points.item2}}%</ion-badge>
+              </button>
+
+              <button ion-item (click)="showForm('Crop details')">
+                <ion-icon name="leaf" item-start></ion-icon>
+                Crop details
+                <ion-badge item-end color="{{ points.item3 <= 10 ? 'danger' : (points.item3 >= 50 ? 'secondary' : 'primary') }}">{{points.item3}}%</ion-badge>
+              </button>
+
+              <button ion-item (click)="showForm('Assets')">
+                <ion-icon name="albums" item-start></ion-icon>
+                Assets
+                <ion-badge item-end color="{{ points.item4 <= 10 ? 'danger' : (points.item4 >= 50 ? 'secondary' : 'primary') }}">{{points.item4}}%</ion-badge>
+              </button>
+
+              <button ion-item (click)="showForm('Loan and liability')">
+                <ion-icon name="card" item-start></ion-icon>
+                Loan and liability
+                <ion-badge item-end color="{{ points.item5 <= 10 ? 'danger' : (points.item5 >= 50 ? 'secondary' : 'primary') }}">{{points.item5}}%</ion-badge>
+              </button>
+
+            </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
