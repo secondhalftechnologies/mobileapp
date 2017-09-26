@@ -24,9 +24,9 @@ export class MyApp {
     this.pages = [
       { title: 'Home',       component: HomePage,    icon: 'home'},
       { title: 'My Farmers', component: FarmersPage, icon: 'people'},
-      { title: 'Account',    component: null,        icon: 'analytics'},
-      { title: 'Settings',   component: null,        icon: 'settings'},
-      { title: 'Logout',     component: null,        icon: 'power'},
+      { title: 'Account',    component: HomePage,    icon: 'analytics'},
+      { title: 'Settings',   component: HomePage,    icon: 'settings'},
+      { title: 'Logout',     component: HomePage,    icon: 'power'},
     ];
 
   }

@@ -26,7 +26,7 @@ export class Farmerdetail {
 		loading.present();
 		setTimeout(() => {
 		    loading.dismiss();
-		}, 3000);
+		}, 1000);
 	}
 
 	getFarmerPoints(id: string){

@@ -10,9 +10,31 @@
 <ion-content padding style="text-align:center">
   <h3>Dashboard</h3>
 
-  <p>
-    Welcome to the mobile app.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-card>
+      <ion-card-header>
+        Bar Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+ 
+    <ion-card>
+      <ion-card-header>
+        Doughnut Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+ 
+    <ion-card>
+      <ion-card-header>
+        Line Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #lineCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  
 </ion-content>
