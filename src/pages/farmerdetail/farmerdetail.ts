@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
-import { Forms } from '../forms/forms';
 
 
 interface point<T> {
     [K: string]: T;
 }
 
+@IonicPage()
 @Component({
   selector: 'page-farmerdetail',
   templateUrl: 'farmerdetail.html'
@@ -49,7 +49,7 @@ export class Farmerdetail {
 	}
 
 	showForm(name:string){
-		this.navCtrl.push(Forms, {
+		this.navCtrl.push('Forms', {
 	      farmer: this.current_farmer,
 	      form_name : name
 	    });

@@ -7,10 +7,15 @@
       <div class="logo"></div>
       <p>Sqore Yard</p>
     </div>
-    <ion-list>
+    <ion-list no-lines class="side-menu">
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}" item-start></ion-icon>
         {{p.title}}
+      </button>
+      <hr>
+      <button menuClose ion-item (click)="logout()">
+        <ion-icon name="power" item-start></ion-icon>
+        Logout
       </button>
     </ion-list>
   </ion-content>

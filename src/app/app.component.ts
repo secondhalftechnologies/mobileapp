@@ -1,11 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { FarmersPage } from '../pages/farmers/farmers';
+import { AuthService } from '../providers/providers';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,20 +10,19 @@ import { FarmersPage } from '../pages/farmers/farmers';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = 'LoginPage';
 
   pages: Array<{title: string, component: any, icon:string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(private auth: AuthService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home',       component: HomePage,    icon: 'home'},
-      { title: 'My Farmers', component: FarmersPage, icon: 'people'},
-      { title: 'Account',    component: HomePage,    icon: 'analytics'},
-      { title: 'Settings',   component: HomePage,    icon: 'settings'},
-      { title: 'Logout',     component: HomePage,    icon: 'power'},
+      { title: 'Home',       component: 'HomePage',    icon: 'home'},
+      { title: 'My Farmers', component: 'FarmersPage', icon: 'people'},
+      { title: 'Account',    component: 'HomePage',    icon: 'analytics'},
+      { title: 'Settings',   component: 'HomePage',    icon: 'settings'},
     ];
 
   }
@@ -46,5 +42,23 @@ export class MyApp {
     if(page){
       this.nav.setRoot(page.component);
     }
+  }
+
+  logout(){
+    let loading = this.presentLoading('Please wait...');
+    loading.present();
+    
+    this.auth.logout().subscribe();
+    this.nav.setRoot('LoginPage');
+    loading.dismiss();
+  }
+
+
+  presentLoading(text: string) {
+    let loading = this.loadingCtrl.create({
+      content: text
+    });
+
+    return loading;
   }
 }

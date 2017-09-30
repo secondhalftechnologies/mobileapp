@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Farmerdetail } from '../farmerdetail/farmerdetail';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
+@IonicPage()
 @Component({
-  selector: 'page-farmers',
+  selector: 'farmers-page',
   templateUrl: 'farmers.html'
 })
 export class FarmersPage {
@@ -41,7 +41,7 @@ export class FarmersPage {
   }
 
   itemTapped(event, farmer) {
-    this.navCtrl.push(Farmerdetail, {
+    this.navCtrl.push('Farmerdetail', {
       farmer: farmer
     });
   }

@@ -5,6 +5,7 @@ interface point<T> {
     [K: string]: T;
 }
 
+@IonicPage()
 @Component({
   selector: 'page-forms',
   templateUrl: 'forms.html'

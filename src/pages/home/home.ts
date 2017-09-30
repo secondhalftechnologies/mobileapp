@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { Chart } from 'chart.js';
+import { MenuController } from 'ionic-angular';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -17,9 +19,9 @@ export class HomePage {
 	doughnutChart: any;
     lineChart: any;
 
-	constructor(public navCtrl: NavController) {
-
-	}
+	constructor(private menu: MenuController, public navCtrl: NavController) {
+		this.menu.enable(true);
+	}	
 
   	ionViewDidLoad() {
  
