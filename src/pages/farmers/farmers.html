@@ -12,8 +12,8 @@
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
     <ion-list-header>Your Farmers</ion-list-header>
 
-    <ion-item-sliding *ngFor="let farmer of items" (click)="itemTapped($event, farmer)">
-      <ion-item>
+    <ion-item-sliding *ngFor="let farmer of items">
+      <ion-item (click)="itemTapped($event, farmer)">
         <ion-avatar item-start>
           <img src="assets/img/{{farmer.image}}">
         </ion-avatar>
@@ -30,5 +30,9 @@
     </ion-item-sliding>
 
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="app" (click)="goto('AddFarmerPage')"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

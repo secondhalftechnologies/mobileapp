@@ -1,0 +1,256 @@
+<!--
+  Generated template for the AddFarmerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="app">
+    <ion-title>AddFarmer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<form [formGroup]="slideOneForm">
+ 		<ion-list>
+			<ion-item-divider color="light">Personal Information</ion-item-divider>
+			<div padding>
+		        <ion-item>
+		            <ion-label floating>Full Name</ion-label>
+		            <ion-input formControlName="fullname" type="text" [class.invalid]="!slideOneForm.controls.fullname.valid && (slideOneForm.controls.fullname.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.fullname.valid  && (slideOneForm.controls.fullname.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.fullname.errors.required">Please enter a valid name.</p>
+		            <p *ngIf="slideOneForm.controls.fullname.errors.maxlength">Length shoud be equal to or smaller than {{slideOneForm.controls.fullname.errors.maxlength.requiredLength}}</p>
+		        </div>
+
+		        
+		        <ion-item>
+		            <ion-label floating>Father's / Spouse's Name</ion-label>
+		            <ion-input formControlName="fathername" type="text" [class.invalid]="!slideOneForm.controls.fathername.valid && (slideOneForm.controls.fathername.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.fathername.valid  && (slideOneForm.controls.fathername.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.fathername.errors.required">Please enter a valid name.</p>
+		            <p *ngIf="slideOneForm.controls.fathername.errors.maxlength">Length shoud be equal to or smaller than {{slideOneForm.controls.fathername.errors.maxlength.requiredLength}}</p>
+		        </div>
+
+
+		        <ion-item>
+		            <ion-label floating>Mother's Name</ion-label>
+		            <ion-input formControlName="mothername" type="text" [class.invalid]="!slideOneForm.controls.mothername.valid && (slideOneForm.controls.mothername.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.mothername.valid  && (slideOneForm.controls.mothername.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.mothername.errors.required">Please enter a valid name.</p>
+		            <p *ngIf="slideOneForm.controls.mothername.errors.maxlength">Length shoud be equal to or smaller than {{slideOneForm.controls.mothername.errors.maxlength.requiredLength}}</p>
+		        </div>
+
+
+
+		        <ion-item>
+				  <ion-label floating>Date of Birth</ion-label>
+				  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>
+				</ion-item>
+				<div *ngIf="!slideOneForm.controls.dob.valid  && (slideOneForm.controls.dob.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.dob.errors.required">Please enter a valid Date.</p>
+		        </div>
+
+
+		        <ion-item>
+		            <ion-label floating>Mobile no.</ion-label>
+		            <ion-input formControlName="mobile" type="number" [class.invalid]="!slideOneForm.controls.mobile.valid && (slideOneForm.controls.mobile.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.mobile.valid  && (slideOneForm.controls.mobile.dirty || submitAttempt)">
+		            <p>Please enter a 10 digit valid Mobile no.</p>
+		        </div>
+
+				<ion-item>
+				    <ion-label floating>Are you Married?</ion-label>
+				    <ion-select formControlName="married" interface="popover">
+				      <ion-option value="yes">Yes</ion-option>
+				      <ion-option value="no">No</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Residence Status</ion-label>
+				    <ion-select formControlName="residence">
+				      <ion-option value="own">Own</ion-option>
+				      <ion-option value="rent">Rent</ion-option>
+				    </ion-select>
+				</ion-item>
+			</div>
+
+			<ion-item-divider color="light">Address(permanent)</ion-item-divider>
+			<div padding>
+				<ion-item>
+		            <ion-label floating>House no.</ion-label>
+		            <ion-input formControlName="phouse" type="text" [class.invalid]="!slideOneForm.controls.phouse.valid && (slideOneForm.controls.phouse.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.phouse.valid  && (slideOneForm.controls.phouse.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.phouse.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+		        <ion-item>
+		            <ion-label floating>Street name.</ion-label>
+		            <ion-input formControlName="pstreet" type="text" [class.invalid]="!slideOneForm.controls.pstreet.valid && (slideOneForm.controls.pstreet.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.pstreet.valid  && (slideOneForm.controls.pstreet.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.pstreet.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+		        <ion-item>
+		            <ion-label floating>Area name</ion-label>
+		            <ion-input formControlName="parea" type="text" [class.invalid]="!slideOneForm.controls.parea.valid && (slideOneForm.controls.parea.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.parea.valid  && (slideOneForm.controls.parea.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.parea.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+
+		        <ion-item>
+				    <ion-label floating>state</ion-label>
+				    <ion-select formControlName="pstate">
+				      <ion-option value="state1">state1</ion-option>
+				      <ion-option value="state2">state2</ion-option>
+				      <ion-option value="state3">state3</ion-option>
+				      <ion-option value="state4">state4</ion-option>
+				    </ion-select>
+				</ion-item>
+				<div *ngIf="!slideOneForm.controls.pstate.valid  && (slideOneForm.controls.pstate.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.pstate.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+				<ion-item>
+				    <ion-label floating>District</ion-label>
+				    <ion-select formControlName="pdistrict">
+				      <ion-option value="district1">district1</ion-option>
+				      <ion-option value="district2">district2</ion-option>
+				      <ion-option value="district3">district3</ion-option>
+				      <ion-option value="district4">district4</ion-option>
+				    </ion-select>
+				</ion-item>
+				<div *ngIf="!slideOneForm.controls.pdistrict.valid  && (slideOneForm.controls.pdistrict.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.pdistrict.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+				<ion-item>
+				    <ion-label floating>Taluka</ion-label>
+				    <ion-select formControlName="ptaluka">
+				      <ion-option value="taluka1">taluka1</ion-option>
+				      <ion-option value="taluka2">taluka2</ion-option>
+				      <ion-option value="taluka3">taluka3</ion-option>
+				      <ion-option value="taluka4">taluka4</ion-option>
+				    </ion-select>
+				</ion-item>
+				<div *ngIf="!slideOneForm.controls.ptaluka.valid  && (slideOneForm.controls.ptaluka.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.ptaluka.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+				<ion-item>
+				    <ion-label floating>Village</ion-label>
+				    <ion-select formControlName="pvillage">
+				      <ion-option value="village1">village1</ion-option>
+				      <ion-option value="village2">village2</ion-option>
+				      <ion-option value="village3">village3</ion-option>
+				      <ion-option value="village4">village4</ion-option>
+				    </ion-select>
+				</ion-item>
+				<div *ngIf="!slideOneForm.controls.pvillage.valid  && (slideOneForm.controls.pvillage.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.pvillage.errors.required">Please enter a valid house no.</p>
+		        </div>
+		        
+
+				<ion-item>
+		            <ion-label floating>Pin code</ion-label>
+		            <ion-input formControlName="ppin" type="number" [class.invalid]="!slideOneForm.controls.ppin.valid && (slideOneForm.controls.ppin.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.ppin.valid  && (slideOneForm.controls.ppin.dirty || submitAttempt)">
+		            <p>Please enter a valid 6 digit Pin no.</p>
+		        </div>
+			</div>
+
+			<ion-item-divider color="light">Address(Current)</ion-item-divider>
+			<div padding>
+				<button ion-button color="light" (click)="copyAddress()">Same as Permanent</button>
+				<ion-item>
+		            <ion-label floating>House no.</ion-label>
+		            <ion-input formControlName="chouse" type="text" [class.invalid]="!slideOneForm.controls.chouse.valid && (slideOneForm.controls.chouse.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.chouse.valid  && (slideOneForm.controls.chouse.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.chouse.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+		        <ion-item>
+		            <ion-label floating>Street name.</ion-label>
+		            <ion-input formControlName="cstreet" type="text" [class.invalid]="!slideOneForm.controls.cstreet.valid && (slideOneForm.controls.cstreet.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.cstreet.valid  && (slideOneForm.controls.cstreet.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.cstreet.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+		        <ion-item>
+		            <ion-label floating>Area name</ion-label>
+		            <ion-input formControlName="carea" type="text" [class.invalid]="!slideOneForm.controls.carea.valid && (slideOneForm.controls.carea.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.carea.valid  && (slideOneForm.controls.carea.dirty || submitAttempt)">
+		            <p *ngIf="slideOneForm.controls.carea.errors.required">Please enter a valid house no.</p>
+		        </div>
+
+
+		        <ion-item>
+				    <ion-label floating>state</ion-label>
+				    <ion-select formControlName="cstate">
+				      <ion-option value="state1">state1</ion-option>
+				      <ion-option value="state2">state2</ion-option>
+				      <ion-option value="state3">state3</ion-option>
+				      <ion-option value="state4">state4</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>District</ion-label>
+				    <ion-select formControlName="cdistrict">
+				      <ion-option value="district1">district1</ion-option>
+				      <ion-option value="district2">district2</ion-option>
+				      <ion-option value="district3">district3</ion-option>
+				      <ion-option value="district4">district4</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Taluka</ion-label>
+				    <ion-select formControlName="ctaluka">
+				      <ion-option value="taluka1">taluka1</ion-option>
+				      <ion-option value="taluka2">taluka2</ion-option>
+				      <ion-option value="taluka3">taluka3</ion-option>
+				      <ion-option value="taluka4">taluka4</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Village</ion-label>
+				    <ion-select formControlName="cvillage">
+				      <ion-option value="village1">village1</ion-option>
+				      <ion-option value="village2">village2</ion-option>
+				      <ion-option value="village3">village3</ion-option>
+				      <ion-option value="village4">village4</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>Pin code</ion-label>
+		            <ion-input formControlName="cpin" type="number" [class.invalid]="!slideOneForm.controls.cpin.valid && (slideOneForm.controls.cpin.dirty || submitAttempt)"></ion-input>
+		        </ion-item>
+		        <div *ngIf="!slideOneForm.controls.cpin.valid  && (slideOneForm.controls.cpin.dirty || submitAttempt)">
+		            <p>Please enter a valid 6 digit Pin no.</p>
+		        </div>
+			</div>
+	    </ion-list>
+    </form>
+    <div padding>
+	    <button ion-button full color="app" (click)="save()">Add Farmer</button>
+    </div>
+</ion-content>

@@ -45,4 +45,8 @@ export class FarmersPage {
       farmer: farmer
     });
   }
+
+  goto(page: string){
+    this.navCtrl.push(page);
+  }
 }
