@@ -17,6 +17,7 @@ export class Forms {
 	current_farmer: {id:string, image:string, name: string, address: string, points: string};
 	form_name: string;
 	points: point<string>;
+	forms:Array<any>;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){
 		this.current_farmer = navParams.get('farmer');
@@ -39,6 +40,13 @@ export class Forms {
 			'item4' : '40',
 			'item5' : '50',
 		};
+
+		this.forms = [
+			{ title: 'Applicant\'s Knowledge',     pageName: 'KycKnowledgePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			{ title: 'Applicant\'s Phone Details', pageName: 'KycPhonePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			{ title: 'Family Details',             pageName: 'KycFamilyPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			{ title: 'Appliances Motors',          pageName: 'KycAppliancesPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+		];
 	}
 
 	presentLoading(text: string) {
@@ -47,5 +55,11 @@ export class Forms {
 	  });
 
 	  return loading;
+	}
+
+	onTap(page: string){
+		this.navCtrl.push(page, {
+	      
+	    });
 	}
 }

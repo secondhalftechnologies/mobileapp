@@ -30,7 +30,7 @@ export class AddFarmerPage {
         experience: ['', Validators.compose([Validators.pattern('^[0-9.]{5}$'), Validators.required])],
         married: ['', Validators.required],
         residence: ['', Validators.required],
-
+        
         phouse: ['', Validators.required],
         pstreet: ['', Validators.required],
         parea: ['', Validators.required],
@@ -39,7 +39,7 @@ export class AddFarmerPage {
         ptaluka: ['', Validators.required],
         pvillage: ['', Validators.required],
         ppin: ['', Validators.compose([Validators.pattern('^[0-9]{6}$'), Validators.required])],
-
+        
         chouse: ['', Validators.required],
         cstreet: ['', Validators.required],
         carea: ['', Validators.required],

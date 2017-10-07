@@ -19,56 +19,16 @@
       <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
         <div padding>
             <ion-card-header>
-              <h1><small>Total : </small>89.4</h1>
+              <h1><small>Total : </small>0</h1>
             </ion-card-header>
-            <ion-card>
+            <ion-card *ngFor="let form of forms" (click)="onTap(form.pageName)">
               <ion-card-header>
-                Form 1
-                <ion-badge item-end color="{{ points.item1 <= 10 ? 'danger' : (points.item1 >= 50 ? 'secondary' : 'primary') }}">{{points.item1}}%</ion-badge>
+                <strong>{{form.title}}</strong>
+                <ion-badge item-end color="{{ form.point <= 10 ? 'danger' : (form.point >= 50 ? 'secondary' : 'primary') }}">{{form.point}}%</ion-badge>
 
               </ion-card-header>
               <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-              </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header>
-                Form 2
-                <ion-badge item-end color="{{ points.item2 <= 10 ? 'danger' : (points.item2 >= 50 ? 'secondary' : 'primary') }}">{{points.item2}}%</ion-badge>
-              </ion-card-header>
-              <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
-              </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header>
-                Form 3
-                <ion-badge item-end color="{{ points.item3 <= 10 ? 'danger' : (points.item3 >= 50 ? 'secondary' : 'primary') }}">{{points.item3}}%</ion-badge>
-              </ion-card-header>
-              <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
-              </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header>
-                Form 4
-                <ion-badge item-end color="{{ points.item4 <= 10 ? 'danger' : (points.item4 >= 50 ? 'secondary' : 'primary') }}">{{points.item4}}%</ion-badge>
-              </ion-card-header>
-              <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-              </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header>
-                Form 5
-                <ion-badge item-end color="{{ points.item5 <= 10 ? 'danger' : (points.item5 >= 50 ? 'secondary' : 'primary') }}">{{points.item5}}%</ion-badge>
-              </ion-card-header>
-              <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                 {{form.desc}}
               </ion-card-content>
             </ion-card>
         </div>

@@ -1,0 +1,75 @@
+<!--
+  Generated template for the KycAppliancesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>kyc-appliances</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="appliances">
+		<ion-list>
+			<div padding>
+				<ion-item>
+		            <ion-label floating>Television  <span>*</span></ion-label>
+		            <ion-input formControlName="f7_television" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Refrigerator <span>*</span></ion-label>
+		            <ion-input formControlName="f7_refrigerator" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Washing Machine <span>*</span></ion-label>
+		            <ion-input formControlName="f7_wmachine" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Mixer <span>*</span></ion-label>
+		            <ion-input formControlName="f7_mixer" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Gas Stove <span>*</span></ion-label>
+		            <ion-input formControlName="f7_stove" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Bicycle <span>*</span></ion-label>
+		            <ion-input formControlName="f7_bicycle" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Cooking Cylinder <span>*</span></ion-label>
+		            <ion-input formControlName="f7_ccylinder" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Lights & Fans <span>*</span></ion-label>
+		            <ion-input formControlName="f7_fans" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Motorcycle <span>*</span></ion-label>
+		            <ion-input formControlName="f7_motorcycle" type="number"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Car <span>*</span></ion-label>
+		            <ion-input formControlName="f7_car" type="number"></ion-input>
+		        </ion-item>
+			</div>
+		</ion-list>
+		<div padding>
+		    <button ion-button full color="app" (click)="save()">Save</button>
+	    </div>
+	</form>
+</ion-content>

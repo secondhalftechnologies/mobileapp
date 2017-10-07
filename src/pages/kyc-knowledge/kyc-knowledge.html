@@ -1,0 +1,82 @@
+<!--
+  Generated template for the KycKnowledgePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>kyc-knowledge</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="knowledge">
+		<ion-list>
+			<div padding>
+				<ion-item>
+				    <ion-label floating>Educational Qualification Details <span>*</span></ion-label>
+				    <ion-select formControlName="f2_edudetail" interface="popover">
+						<ion-option value="illiterate"> Illiterate </ion-option> 
+						<ion-option value="primary education"> Education </ion-option> 
+						<ion-option value="matriculate"> Matriculate </ion-option> 
+						<ion-option value="graduate"> Graduate </ion-option> 
+						<ion-option value="post graduate"> Post Graduate </ion-option> 
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Regional Language Knowledge <span>*</span></ion-label>
+				    <ion-select formControlName="f2_proficiency" interface="popover">
+				      <ion-option value="read write">Read and Write</ion-option>
+				      <ion-option value="read only">Read Only</ion-option>
+				      <ion-option value="understand only">Understand Only</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Participation In Farming Programs</ion-label>
+				    <ion-select formControlName="f2_participation" interface="popover">
+				      <ion-option value="yes">Yes</ion-option>
+				      <ion-option value="no">No</ion-option>
+				    </ion-select>
+				</ion-item>
+			</div>
+
+			<div padding *ngIf="knowledge.controls.f2_participation.value === 'yes'">
+				<ion-item>
+				    <ion-label floating>Type Of The Training Programs <span>*</span></ion-label>
+				    <ion-select formControlName="f2_typeprog" interface="popover">
+				      <ion-option value="organic farming training">Organic Farming Training</ion-option>
+				      <ion-option value="equipment training">Equipment Training</ion-option>
+				      <ion-option value="technology training">Technology Training</ion-option>
+				      <ion-option value="pesticide fertilizer training">Pesticide/Fertilizer Training</ion-option>
+				      <ion-option value="other farming training">Other Farming Training</ion-option>
+				      <ion-option value="others">Others</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>What Was The Duration Of The Program? <span>*</span></ion-label>
+		            <ion-input formControlName="f2_durprog" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Who Conducted The Program? <span>*</span></ion-label>
+		            <ion-input formControlName="f2_durprog" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>For Which Crop Was The Program Held? <span>*</span></ion-label>
+		            <ion-input formControlName="f2_durprog" type="text"></ion-input>
+		        </ion-item>
+			</div>
+		</ion-list>
+		<div padding>
+		    <button ion-button full color="app" (click)="save()">Save</button>
+	    </div>
+	</form>
+</ion-content>

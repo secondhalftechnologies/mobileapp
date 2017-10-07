@@ -1,0 +1,86 @@
+<!--
+  Generated template for the KycFamilyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>kyc-family</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="family">
+		<ion-list>
+			<div padding>
+				<ion-item>
+				    <ion-label floating>Do You Live In A Joint Family? <span>*</span></ion-label>
+				    <ion-select formControlName="f6_jointfamily" interface="popover">
+				      <ion-option value="yes">yes</ion-option>
+				      <ion-option value="no">no</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>How Many Members Are There In Your Family? <span>*</span></ion-label>
+				    <ion-select formControlName="f6_members" interface="popover">
+				      <ion-option value="1">1</ion-option>
+				      <ion-option value="2">2</ion-option>
+				      <ion-option value="3">3</ion-option>
+				      <ion-option value="4">4</ion-option>
+				      <ion-option value="5">5</ion-option>
+				      <ion-option value="6">6</ion-option>
+				      <ion-option value="7">7</ion-option>
+				      <ion-option value="8">8</ion-option>
+				      <ion-option value="9">9</ion-option>
+				      <ion-option value="10">10</ion-option>
+				      <ion-option value="11">11</ion-option>
+				      <ion-option value="12">12</ion-option>
+				      <ion-option value="13">13</ion-option>
+				      <ion-option value="14">14</ion-option>
+				      <ion-option value="15">15</ion-option>
+				      <ion-option value="16">16</ion-option>
+				      <ion-option value="17">17</ion-option>
+				      <ion-option value="18">18</ion-option>
+				      <ion-option value="19">19</ion-option>
+				      <ion-option value="20">20</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Number Of Children <span>*</span></ion-label>
+				    <ion-select formControlName="f6_children" interface="popover">
+				      <ion-option value="0">0</ion-option>
+				      <ion-option value="1">1</ion-option>
+				      <ion-option value="2">2</ion-option>
+				      <ion-option value="3">3</ion-option>
+				      <ion-option value="4">4</ion-option>
+				      <ion-option value="5">5</ion-option>
+				      <ion-option value="6">6</ion-option>
+				      <ion-option value="7">7</ion-option>
+				      <ion-option value="8">8</ion-option>
+				      <ion-option value="9">9</ion-option>
+				      <ion-option value="10">10</ion-option>
+				      <ion-option value="11">11</ion-option>
+				      <ion-option value="12">12</ion-option>
+				      <ion-option value="13">13</ion-option>
+				      <ion-option value="14">14</ion-option>
+				      <ion-option value="15">15</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item *ngIf="family.controls.f6_children.value !== '0'">
+		            <ion-label floating>Any Of Children Use Smart Phones? <span>*</span></ion-label>
+		            <ion-input formControlName="f6_smartuse" type="text"></ion-input>
+		        </ion-item>
+			</div>
+		</ion-list>
+		<div padding>
+		    <button ion-button full color="app" (click)="save()">Save</button>
+	    </div>
+	</form>
+</ion-content>
