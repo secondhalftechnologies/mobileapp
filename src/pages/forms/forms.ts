@@ -21,10 +21,9 @@ export class Forms {
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){
 		this.current_farmer = navParams.get('farmer');
-		this.getFarmerPoints(this.current_farmer.id);
 		this.form_name = navParams.get('form_name');
-				
 		let loading = this.presentLoading('Please wait...');
+		this.getFarmerPoints(this.current_farmer.id);
 		loading.present();
 		setTimeout(() => {
 		    loading.dismiss();
@@ -41,12 +40,39 @@ export class Forms {
 			'item5' : '50',
 		};
 
-		this.forms = [
-			{ title: 'Applicant\'s Knowledge',     pageName: 'KycKnowledgePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-			{ title: 'Applicant\'s Phone Details', pageName: 'KycPhonePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-			{ title: 'Family Details',             pageName: 'KycFamilyPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-			{ title: 'Appliances Motors',          pageName: 'KycAppliancesPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-		];
+		if(this.form_name == 'kyc'){
+			this.forms = [
+				{ title: 'Applicant\'s Knowledge',     pageName: 'KycKnowledgePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Applicant\'s Phone Details', pageName: 'KycPhonePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Family Details',             pageName: 'KycFamilyPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Appliances Motors',          pageName: 'KycAppliancesPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			];
+		}
+		else if(this.form_name == 'land details'){
+			this.forms = [
+				{ title: 'Farm Land Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			];
+		}
+		else if(this.form_name == 'crop details'){
+			this.forms = [
+				{ title: 'Crop And Cultivation Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Previous Crop Cycle Details',   pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Current Crop Cycle Details',    pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			];
+		}
+		else if(this.form_name == 'assets'){
+			this.forms = [
+				{ title: 'Assets Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Live Stock',      pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			];
+		}
+		else if(this.form_name == 'loan and liability'){
+			this.forms = [
+				{ title: 'Home Loan Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Financial Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Financial History',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+			];
+		}
 	}
 
 	presentLoading(text: string) {
@@ -58,8 +84,10 @@ export class Forms {
 	}
 
 	onTap(page: string){
-		this.navCtrl.push(page, {
-	      
-	    });
+		if (page) {
+			this.navCtrl.push(page, {
+		      
+		    });
+		}
 	}
 }
