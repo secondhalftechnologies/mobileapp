@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Generated class for the KycKnowledgePage page.
@@ -16,7 +16,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class KycKnowledgePage {
 
 	knowledge: FormGroup;
-	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private loadingCtrl: LoadingController) {
 		this.knowledge = formBuilder.group({
 			'f2_points' : [''],
 
@@ -31,7 +31,14 @@ export class KycKnowledgePage {
 	}
 
 	ionViewDidLoad() {
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
+		});
+		loading.present();
 		console.log('ionViewDidLoad KycKnowledgePage');
+		setTimeout(() => {
+		    loading.dismiss();
+		}, 1000);
 	}
 
 	save(){

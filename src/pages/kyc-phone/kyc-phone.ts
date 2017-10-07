@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class KycPhonePage {
 
-  phone: FormGroup;
+    phone: FormGroup;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
 		this.phone = formBuilder.group({
 			'f5_points' : [''],

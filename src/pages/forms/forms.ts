@@ -22,8 +22,8 @@ export class Forms {
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){
 		this.current_farmer = navParams.get('farmer');
 		this.form_name = navParams.get('form_name');
-		let loading = this.presentLoading('Please wait...');
 		this.getFarmerPoints(this.current_farmer.id);
+		let loading = this.presentLoading('Please wait...');
 		loading.present();
 		setTimeout(() => {
 		    loading.dismiss();
@@ -50,7 +50,7 @@ export class Forms {
 		}
 		else if(this.form_name == 'land details'){
 			this.forms = [
-				{ title: 'Farm Land Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Farm Land Details',  pageName: 'LandFarmPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
 			];
 		}
 		else if(this.form_name == 'crop details'){
@@ -85,9 +85,10 @@ export class Forms {
 
 	onTap(page: string){
 		if (page) {
-			this.navCtrl.push(page, {
-		      
-		    });
+		 	// let loading = this.presentLoading('Please wait...');
+			// loading.present();
+			this.navCtrl.push(page, {});
+			// loading.dismiss();
 		}
 	}
 }

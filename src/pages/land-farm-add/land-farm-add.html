@@ -1,0 +1,167 @@
+<!--
+  Generated template for the LandFarmAddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>land-farm-add</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="land">
+		<ion-list>
+			<div padding>	
+
+				<ion-item>
+		            <ion-label floating>Size In Acres <span>*</span></ion-label>
+		            <ion-input formControlName="f9_land_size1" type="text"></ion-input>
+		        </ion-item>
+
+				<ion-item>
+				    <ion-label floating>Ownership?</ion-label>
+				    <ion-select formControlName="f9_owner1" interface="popover">
+				      <ion-option value="Owned">Owned</ion-option>
+				      <ion-option value="Ancestral">Ancestral</ion-option>
+				      <ion-option value="Rented">Rented</ion-option>
+				      <ion-option value="Contracted">Contracted</ion-option>
+				      <ion-option value="Leased">Leased</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item *ngIf="land.controls.f9_owner1.value === 'Leased'">
+		            <ion-label floating>No. Of Lease Year<span>*</span></ion-label>
+		            <ion-input formControlName="f9_lease_year1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item *ngIf="land.controls.f9_owner1.value === 'Rented'">
+		            <ion-label floating>Mention Tha Amount Per Month On Rent <span>*</span></ion-label>
+		            <ion-input formControlName="f9_amount_on_rent1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item *ngIf="land.controls.f9_owner1.value === 'Contracted'">
+		            <ion-label floating>No. Of Contract Year <span>*</span></ion-label>
+		            <ion-input formControlName="f9_contract_year1" type="text"></ion-input>
+		        </ion-item>
+
+				<ion-item>
+				    <ion-label floating>state</ion-label>
+				    <ion-select formControlName="f9_state1">
+				      <ion-option value="state1">state1</ion-option>
+				      <ion-option value="state2">state2</ion-option>
+				      <ion-option value="state3">state3</ion-option>
+				      <ion-option value="state4">state4</ion-option>
+				    </ion-select>
+				</ion-item>
+				
+				<ion-item>
+				    <ion-label floating>District</ion-label>
+				    <ion-select formControlName="f9_district1">
+				      <ion-option value="district1">district1</ion-option>
+				      <ion-option value="district2">district2</ion-option>
+				      <ion-option value="district3">district3</ion-option>
+				      <ion-option value="district4">district4</ion-option>
+				    </ion-select>
+				</ion-item>
+				
+				<ion-item>
+				    <ion-label floating>Taluka</ion-label>
+				    <ion-select formControlName="f9_taluka1">
+				      <ion-option value="taluka1">taluka1</ion-option>
+				      <ion-option value="taluka2">taluka2</ion-option>
+				      <ion-option value="taluka3">taluka3</ion-option>
+				      <ion-option value="taluka4">taluka4</ion-option>
+				    </ion-select>
+				</ion-item>
+				
+				<ion-item>
+				    <ion-label floating>Village Name</ion-label>
+				    <ion-select formControlName="f9_vilage1">
+				      <ion-option value="village1">village1</ion-option>
+				      <ion-option value="village2">village2</ion-option>
+				      <ion-option value="village3">village3</ion-option>
+				      <ion-option value="village4">village4</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>Survey Number <span>*</span></ion-label>
+		            <ion-input formControlName="f9_survey_number1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Pin-Code <span>*</span></ion-label>
+		            <ion-input formControlName="f9_pincode1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Latitude <span>*</span></ion-label>
+		            <ion-input formControlName="f9_lat1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+		            <ion-label floating>Longitude <span>*</span></ion-label>
+		            <ion-input formControlName="f9_long1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+				    <ion-label floating>Type Of Soil</ion-label>
+				    <ion-select formControlName="f9_soil_type1" interface="popover">
+				      <ion-option value="Alluvial Soil">Alluvial Soil</ion-option>
+				      <ion-option value="Black Soil">Black Soil</ion-option>
+				      <ion-option value="Red Soil">Red Soil</ion-option>
+				      <ion-option value="Mountain Soil">Mountain Soil</ion-option>
+				      <ion-option value="Peat">Peat</ion-option>
+				      <ion-option value="Laterite Soil">Laterite Soil</ion-option>
+				      <ion-option value="Desert Soil">Desert Soil</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+				    <ion-label floating>Have You Had The Soil Tested In Your Land?</ion-label>
+				    <ion-select formControlName="f9_soil_tested1" interface="popover"	>
+				      <ion-option value="yes">Yes</ion-option>
+				      <ion-option value="no">No</ion-option>
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>Soil Depth* <span>*</span></ion-label>
+		            <ion-input formControlName="f9_soil_depth1" type="text"></ion-input>
+		        </ion-item>
+
+		        <ion-item>
+				    <ion-label floating>Source Of Water</ion-label>
+				    <ion-select formControlName="f9_source_of_water1">
+				      <ion-option value="Well Water">Well Water</ion-option>
+				      <ion-option value="Tube Water">Tube Water</ion-option>
+				      <ion-option value="Tank Water">Tank Water</ion-option>
+				      <ion-option value="Canals">Canals</ion-option>
+				      <ion-option value="Perennial Water">Perennial Water</ion-option>
+				      <ion-option value="Multipurpose River">Multipurpose River</ion-option>
+				      <ion-option value="Rain Fed">Rain Fed</ion-option>
+				      <ion-option value="Drip Irrigation">Drip Irrigation</ion-option>
+				      <ion-option value="Sprinkler">Sprinkler</ion-option>
+				      <ion-option value="Furrow">Furrow</ion-option>
+				      <ion-option value="Ditch">Ditch</ion-option>
+				      <ion-option value="Surge">Surge</ion-option>
+				      <ion-option value="Seepage">Seepage</ion-option>
+				    </ion-select>
+				</ion-item>
+
+			</div>
+
+			<div padding>
+				
+			</div>
+		</ion-list>
+		<div padding>
+		    <button ion-button full color="app" (click)="save()">Save</button>
+	    </div>
+	</form>
+</ion-content>
