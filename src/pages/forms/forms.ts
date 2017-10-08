@@ -55,15 +55,15 @@ export class Forms {
 		}
 		else if(this.form_name == 'crop details'){
 			this.forms = [
-				{ title: 'Crop And Cultivation Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Previous Crop Cycle Details',   pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Current Crop Cycle Details',    pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Crop And Cultivation Details',  pageName: 'CropCultivationPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Previous Crop Cycle Details',   pageName: 'CropPreviousPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Current Crop Cycle Details',    pageName: 'CropCurrentPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
 			];
 		}
 		else if(this.form_name == 'assets'){
 			this.forms = [
-				{ title: 'Assets Details',  pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Live Stock',      pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Assets Details',  pageName: 'AssetsDetailsPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Live Stock',      pageName: 'AssetsStockPage',   point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
 			];
 		}
 		else if(this.form_name == 'loan and liability'){

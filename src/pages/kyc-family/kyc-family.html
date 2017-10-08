@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>kyc-family</ion-title>
+  <ion-navbar color="app">
+    <ion-title>Family Details</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -75,7 +75,10 @@
 
 				<ion-item *ngIf="family.controls.f6_children.value !== '0'">
 		            <ion-label floating>Any Of Children Use Smart Phones? <span>*</span></ion-label>
-		            <ion-input formControlName="f6_smartuse" type="text"></ion-input>
+		            <ion-select formControlName="f6_smartuse" interface="popover">
+				      <ion-option value="yes">yes</ion-option>
+				      <ion-option value="no">no</ion-option>
+				    </ion-select>
 		        </ion-item>
 			</div>
 		</ion-list>

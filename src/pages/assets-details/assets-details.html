@@ -1,0 +1,79 @@
+<!--
+  Generated template for the AssetsDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="app">
+    <ion-title>Assets Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="assets">
+		<ion-list>
+			<div padding>
+				<ion-item>
+				    <ion-label floating>Vehical Owned <span>*</span></ion-label>
+				    <ion-select formControlName="f12_vehicle" interface="popover">
+						<ion-option value="1">1</ion-option> 
+						<ion-option value="2">2</ion-option> 
+						<ion-option value="3">3</ion-option> 
+						<ion-option value="4_or_more">4_or_more</ion-option> 
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>Total Value Of The Vehical <span>*</span></ion-label>
+		            <ion-input formControlName="f12_total_val_of_vehical" type="text"></ion-input>
+		        </ion-item>
+
+				<ion-item>
+				    <ion-label floating>Machinery Owned <span>*</span></ion-label>
+				    <ion-select formControlName="f12_machinery" interface="popover">
+						<ion-option value="1">1</ion-option> 
+						<ion-option value="2">2</ion-option> 
+						<ion-option value="3">3</ion-option> 
+						<ion-option value="4_or_more">4_or_more</ion-option> 
+				    </ion-select>
+				</ion-item>
+
+				<ion-item>
+		            <ion-label floating>Total Value Of The Machinery  <span>*</span></ion-label>
+		            <ion-input formControlName="f12_total_val_of_machinery" type="text"></ion-input>
+		        </ion-item>
+
+				<ion-item>
+				    <ion-label floating>Any Other Assets</ion-label>
+				    <ion-select formControlName="f12_any_other_assets" interface="popover">
+				      <ion-option value="yes">Yes</ion-option>
+				      <ion-option value="no">No</ion-option>
+				    </ion-select>
+				</ion-item>
+				<div *ngIf="assets.controls.f12_any_other_assets.value === 'yes'">
+					<ion-item>
+					    <ion-label floating>Which Assets You Owned </ion-label>
+					    <ion-select formControlName="f12_name_of_other_assets" interface="popover">
+					      <ion-option value="Other Buildings">Other Buildings</ion-option>
+					      <ion-option value="Land">Land</ion-option>
+					      <ion-option value="Residential Building">Residential Building</ion-option>
+					      <ion-option value="Other">Other</ion-option>
+					    </ion-select>
+					</ion-item>
+
+					<ion-item>
+			            <ion-label floating>Mention The Value Of The Assets <span>*</span></ion-label>
+			            <ion-input formControlName="f12_mention_value_of_assets" type="text"></ion-input>
+			        </ion-item>
+				</div>
+			</div>
+		</ion-list>
+		<div padding>
+		    <button ion-button full color="app" (click)="save()">Save</button>
+	    </div>
+	</form>
+</ion-content>
