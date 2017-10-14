@@ -5,11 +5,13 @@
     </button>
     <ion-title>Farmers</ion-title>
   </ion-navbar>
+  <ion-toolbar color="app">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="list-avatar-page">
   <ion-list>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
     <ion-list-header>Your Farmers</ion-list-header>
 
     <ion-item-sliding *ngFor="let farmer of items">
