@@ -69,8 +69,8 @@ export class Forms {
 		else if(this.form_name == 'loan and liability'){
 			this.forms = [
 				{ title: 'Home Loan Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Financial Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Financial History',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Financial Details',     pageName: 'LoanFinancialdetailsPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Financial History',     pageName: 'LoanFinancialhistoryPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
 			];
 		}
 	}
