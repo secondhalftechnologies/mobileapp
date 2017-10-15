@@ -22,13 +22,13 @@ export class KycKnowledgePage {
 		this.knowledge = formBuilder.group({
 			'f2_points' : ['0'],
 
-			'f2_edudetail' : ['', Validators.required],
-			'f2_proficiency' : ['', Validators.required],
-			'f2_participation' : [''],
-			'f2_typeprog' : ['', Validators.required],
-			'f2_durprog' : ['', Validators.required],
-			'f2_condprog' : ['', Validators.required],
-			'f2_cropprog' : ['', Validators.required],
+			'f2_edudetail' : ['', Validators.required], //drp
+			'f2_proficiency' : ['', Validators.required], //drp
+			'f2_participation' : [''], //drp
+			'f2_typeprog' : ['', Validators.required], //drp
+			'f2_durprog' : ['', Validators.compose([Validators.required, Validators.maxLength(3), Validators.pattern('^[0-9]+$')]) ],
+			'f2_condprog' : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)]) ],
+			'f2_cropprog' : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)]) ],
 		});
 	}
 
@@ -46,18 +46,9 @@ export class KycKnowledgePage {
 		this.setValidation();
 
 		//Listen for form changes
-		this.knowledge.controls['f2_edudetail'].valueChanges.subscribe(() => {
-			this.knowledge.get('f2_points').setValue(this.getTotal(), { emitEvent: false });
-			console.log(this.knowledge.get('f2_points').value);
-		});
-		this.knowledge.controls['f2_proficiency'].valueChanges.subscribe(() => {
-			this.knowledge.get('f2_points').setValue(this.getTotal(), { emitEvent: false }); 
-			console.log(this.knowledge.get('f2_points').value);
-		});
-		this.knowledge.controls['f2_participation'].valueChanges.subscribe(() => {
-			this.knowledge.get('f2_points').setValue(this.getTotal(), { emitEvent: false }); 
-			console.log(this.knowledge.get('f2_points').value);
-		});
+		this.knowledge.controls['f2_edudetail'].valueChanges.subscribe(() => {this.getTotal();});
+		this.knowledge.controls['f2_proficiency'].valueChanges.subscribe(() => {this.getTotal();});
+		this.knowledge.controls['f2_participation'].valueChanges.subscribe(() => {this.getTotal();});
 	}
 
 	setValidation(){
@@ -133,9 +124,9 @@ export class KycKnowledgePage {
 			total += Number(points[point]);
 		}
 
-		return total;
-		// this.knowledge.get('f2_points').setValue(total, { emitEvent: false });
-		// console.log(total);
+		console.log(total);
+		total = parseFloat((total/3).toFixed(2));
+		this.knowledge.get('f2_points').setValue(total, { emitEvent: false });
 	}
 
 	save(){

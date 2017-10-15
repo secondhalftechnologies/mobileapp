@@ -14,8 +14,11 @@
 
 
 <ion-content padding>
-	<div padding style="text-align: center; color: gray"> <small>No Cultivation details added!<br>Click add new button to add</small></div>
-	<div padding>
-		<button ion-button full color="app" (click)="addnew()">Add new</button>
-	</div>
+  <div padding class="tooltip-icon">
+    <div padding><ion-icon name="leaf"></ion-icon></div>
+    <small>No Cultivation details added!<br>Click add new land to add</small>
+  </div>
+  <div padding>
+    <button ion-button full color="app" (click)="addnew()">Add new Land</button>
+  </div>
 </ion-content>
