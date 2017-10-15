@@ -16,6 +16,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class KycPhonePage {
 
     phone: FormGroup;
+	submitAttempt: boolean = false;
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
 		this.phone = formBuilder.group({
 			'f5_points' : ['0'],
@@ -27,7 +29,7 @@ export class KycPhonePage {
 			'f5_datapack' : [''],
 			'f5_datapackname' : [''],
 			'f5_appuse' : [''],
-			'f5_app_name' : ['', Validators.required],
+			'f5_app_name' : ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
 			'f5_farmapp' : [''],
 			
 		});
@@ -156,10 +158,12 @@ export class KycPhonePage {
 			total = total/2;
 		}
 
+		total = parseFloat(total.toFixed(2));
 		this.phone.get('f5_points').setValue(total, { emitEvent: false });
 	}
 
 	save(){
+		this.submitAttempt = true;
 		if (this.phone.valid) {
 			console.log(this.phone.value);
 		}else{

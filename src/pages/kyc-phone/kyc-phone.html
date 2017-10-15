@@ -27,6 +27,10 @@
 						<ion-option value="featurephone"> Featurephone </ion-option> 
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="phone.controls.f5_phonetype.invalid  && (phone.controls.f5_phonetype.dirty || submitAttempt)">
+		            <p *ngIf="phone.controls.f5_phonetype.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Does Any Of Your Family Member Own A Smart Phone? <span>*</span></ion-label>
@@ -35,6 +39,10 @@
 				      <ion-option value="no">no</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="phone.controls.f5_any_one_have_smart_phone.invalid  && (phone.controls.f5_any_one_have_smart_phone.dirty || submitAttempt)">
+		            <p *ngIf="phone.controls.f5_any_one_have_smart_phone.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Who Is The Service Provider?</ion-label>
@@ -89,6 +97,11 @@
 		            <ion-label floating>Specify Name Of The App <span>*</span></ion-label>
 		            <ion-input formControlName="f5_app_name" type="text"></ion-input>
 		        </ion-item>
+		        <div *ngIf="phone.controls.f5_app_name.invalid  && (phone.controls.f5_app_name.dirty || submitAttempt)">
+		            <p *ngIf="phone.controls.f5_app_name.errors.required">This field is required.</p>
+		            <p *ngIf="phone.controls.f5_app_name.errors.minlength">Please enter at least 3 characters.</p>
+		            <p *ngIf="phone.controls.f5_app_name.errors.maxlength">Length should be smaller than or equal to 100.</p>
+		        </div>
 
 				<ion-item>
 				    <ion-label floating>Subscriptions To Farming Advisory Apps?</ion-label>

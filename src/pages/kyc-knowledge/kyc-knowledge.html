@@ -30,7 +30,7 @@
 				    </ion-select>
 				</ion-item>
 				<div *ngIf="!knowledge.controls.f2_edudetail.valid  && (knowledge.controls.f2_edudetail.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_edudetail.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_edudetail.errors.required">This field is required.</p>
 		        </div>
 
 				<ion-item>
@@ -42,7 +42,8 @@
 				    </ion-select>
 				</ion-item>
 				<div *ngIf="!knowledge.controls.f2_proficiency.valid  && (knowledge.controls.f2_proficiency.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_proficiency.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_proficiency.errors.required">This field is required.</p>
+		           
 		        </div>
 
 				<ion-item>
@@ -67,16 +68,18 @@
 				    </ion-select>
 				</ion-item>
 				<div *ngIf="!knowledge.controls.f2_typeprog.valid  && (knowledge.controls.f2_typeprog.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_typeprog.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_typeprog.errors.required">This field is required.</p>
 		        </div>
 
 
 				<ion-item>
-		            <ion-label floating>What Was The Duration Of The Program? <span>*</span></ion-label>
-		            <ion-input formControlName="f2_durprog" type="text"></ion-input>
+		            <ion-label floating>What Was The Duration Of The Program? (in Days) <span>*</span></ion-label>
+		            <ion-input formControlName="f2_durprog" type="number" min="1"></ion-input>
 		        </ion-item>
 		        <div *ngIf="!knowledge.controls.f2_durprog.valid  && (knowledge.controls.f2_durprog.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_durprog.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_durprog.errors.required">This field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_durprog.errors.maxlength">Length should be smaller than or equal to 3.</p>
+		            <p *ngIf="knowledge.controls.f2_durprog.errors.pattern">Please Enter a Valid number.</p>
 		        </div>
 
 
@@ -85,7 +88,9 @@
 		            <ion-input formControlName="f2_condprog" type="text"></ion-input>
 		        </ion-item>
 		        <div *ngIf="!knowledge.controls.f2_condprog.valid  && (knowledge.controls.f2_condprog.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_condprog.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_condprog.errors.required">This field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_condprog.errors.minlength">Please enter at least 4 characters.</p>
+		            <p *ngIf="knowledge.controls.f2_condprog.errors.maxlength">Length should be smaller than or equal to 100.</p>
 		        </div>
 
 
@@ -94,7 +99,9 @@
 		            <ion-input formControlName="f2_cropprog" type="text"></ion-input>
 		        </ion-item>
 		        <div *ngIf="!knowledge.controls.f2_cropprog.valid  && (knowledge.controls.f2_cropprog.dirty || submitAttempt)">
-		            <p *ngIf="knowledge.controls.f2_cropprog.errors.required">Please select, this field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_cropprog.errors?.required">This field is required.</p>
+		            <p *ngIf="knowledge.controls.f2_cropprog.errors?.minlength">Please enter at least 4 characters.</p>
+		            <p *ngIf="knowledge.controls.f2_cropprog.errors?.maxlength">Length should be smaller than or equal to 100.</p>
 		        </div>
 
 			</div>

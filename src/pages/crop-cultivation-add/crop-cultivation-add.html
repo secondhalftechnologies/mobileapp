@@ -6,9 +6,12 @@
 -->
 <ion-header>
 
-  <ion-navbar color="app">
-    <ion-title>Add Crop Cultivation</ion-title>
-  </ion-navbar>
+  	<ion-navbar color="app">
+    	<ion-title>Add Crop Cultivation</ion-title>
+  	</ion-navbar>
+    <ion-toolbar color="app">
+		<ion-title>Total : {{cultivation.controls.f10_points.value}}</ion-title>
+  	</ion-toolbar>
 
 </ion-header>
 
@@ -16,7 +19,7 @@
 <ion-content padding>
 	<form [formGroup]="cultivation">
 		<ion-list>
-			<div padding>
+			<div>
 				<ion-item>
 				    <ion-label floating>Current Crop Season <span>*</span></ion-label>
 				    <ion-select formControlName="f10_crop_season" interface="popover">
@@ -25,6 +28,10 @@
 						<ion-option value="Summer">Summer</ion-option> 
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_crop_season.invalid  && (cultivation.controls.f10_crop_season.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_crop_season.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Type Of Crop Cultivating This Year <span>*</span></ion-label>
@@ -49,11 +56,15 @@
 				      <ion-option value="18">RICE</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_cultivating.invalid  && (cultivation.controls.f10_cultivating.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_cultivating.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Current Stage Of Crop <span>*</span></ion-label>
 				    <ion-select formControlName="f10_stage" interface="popover">
-				      <ion-option value="Land Tilling">Land Tilling</ion-option>
+				      <ion-option value="cultivation Tilling">cultivation Tilling</ion-option>
 				      <ion-option value="Sowing">Sowing</ion-option>
 				      <ion-option value="Manure Adding">Manure Adding / Fertilizer</ion-option>
 				      <ion-option value="Irrigation">Irrigation</ion-option>
@@ -64,11 +75,20 @@
 				      <ion-option value="Storing">Storing</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_stage.invalid  && (cultivation.controls.f10_stage.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_stage.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
-		            <ion-label floating>Total Yield Expected [In Tonnes Per Acre] <span>*</span></ion-label>
+		            <ion-label floating>Total Yield Expected [Per Acre Per Crop] <span>*</span></ion-label>
 		            <ion-input formControlName="f10_expected" type="text"></ion-input>
 		        </ion-item>
+		        <div *ngIf="cultivation.controls.f10_expected.invalid  && (cultivation.controls.f10_expected.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_expected.errors.required">This field is required.</p>
+		            <p *ngIf="cultivation.controls.f10_expected.errors.maxlength">Lenght should be smaller than or equal to 6.</p>
+		            <p *ngIf="cultivation.controls.f10_expected.errors.pattern">Please enter a valid number.</p>
+		        </div>
 				
 				<ion-item>
 				    <ion-label floating>Potential Market <span>*</span></ion-label>
@@ -80,6 +100,10 @@
 				      <ion-option value="Other">Other</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_potential_market.invalid  && (cultivation.controls.f10_potential_market.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_potential_market.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Crop Storage <span>*</span></ion-label>
@@ -90,16 +114,32 @@
 				      <ion-option value="Mandis Direct">Mandis Direct</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_crop_storage.invalid  && (cultivation.controls.f10_crop_storage.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_crop_storage.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
-		            <ion-label floating>Expected Price This Year In Rs. <span>*</span></ion-label>
+		            <ion-label floating>Expected Price This Year [Per Quintal Per Acre] <span>*</span></ion-label>
 		            <ion-input formControlName="f10_expectedprice" type="text"></ion-input>
 		        </ion-item>
+		        <div *ngIf="cultivation.controls.f10_expectedprice.invalid  && (cultivation.controls.f10_expectedprice.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_expectedprice.errors.required">This field is required.</p>
+		            <p *ngIf="cultivation.controls.f10_expectedprice.errors.maxlength">Lenght should be smaller than or equal to 6.</p>
+		            <p *ngIf="cultivation.controls.f10_expectedprice.errors.pattern">Please enter a valid number.</p>
+		        </div>
+
 
 		        <ion-item>
 		            <ion-label floating>Total Income Expected This Year [ Per Acre Per Crop ] <span>*</span></ion-label>
 		            <ion-input formControlName="f10_expectedincome" type="text"></ion-input>
 		        </ion-item>
+		        <div *ngIf="cultivation.controls.f10_expectedincome.invalid  && (cultivation.controls.f10_expectedincome.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_expectedincome.errors.required">This field is required.</p>
+		            <p *ngIf="cultivation.controls.f10_expectedincome.errors.maxlength">Lenght should be smaller than or equal to 6.</p>
+		            <p *ngIf="cultivation.controls.f10_expectedincome.errors.pattern">Please enter a valid number.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Potential Crop Diseases <span>*</span></ion-label>
@@ -111,6 +151,10 @@
 				      <ion-option value="No potential">No potential</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_diseases.invalid  && (cultivation.controls.f10_diseases.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_diseases.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>Potential Pest Control Problems <span>*</span></ion-label>
@@ -119,6 +163,10 @@
 				      <ion-option value="no">no</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_pest.invalid  && (cultivation.controls.f10_pest.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_pest.errors.required">This field is required.</p>
+		        </div>
+
 
 				<ion-item>
 				    <ion-label floating>What Kind Of Fertilizer And Pesticides Being Used <span>*</span></ion-label>
@@ -127,6 +175,10 @@
 				      <ion-option value="Inorganic Fertilizers">Inorganic Fertilizers</ion-option>
 				    </ion-select>
 				</ion-item>
+				<div *ngIf="cultivation.controls.f10_filt_type.invalid  && (cultivation.controls.f10_filt_type.dirty || submitAttempt)">
+		            <p *ngIf="cultivation.controls.f10_filt_type.errors.required">This field is required.</p>
+		        </div>
+
 			</div>
 		</ion-list>
 		<div padding>
