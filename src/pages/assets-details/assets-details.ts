@@ -17,6 +17,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AssetsDetailsPage {
 
 	assets: FormGroup;
+	submitAttempt: boolean = false;
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
 		this.assets = formBuilder.group({
 			'f12_points' : ['0'],
@@ -196,6 +198,7 @@ export class AssetsDetailsPage {
 	}
 
 	save(){
+		this.submitAttempt = true;
 		if (this.assets.valid) {
 			console.log(this.assets.value);
 		}else{
