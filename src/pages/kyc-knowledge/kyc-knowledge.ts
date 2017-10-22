@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../providers/api/api';
+import 'rxjs/add/operator/map';
+
 /**
  * Generated class for the KycKnowledgePage page.
  *
@@ -16,8 +19,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class KycKnowledgePage {
 
 	knowledge: FormGroup;
+	farmer_id: string;
 	submitAttempt: boolean = false;
-	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private loadingCtrl: LoadingController) {
+	retryButton: boolean = false;
+	addNew: boolean = true;
+
+	constructor(public navCtrl: NavController, 
+				public navParams: NavParams, 
+				public formBuilder: FormBuilder, 
+				private loadingCtrl: LoadingController, 
+				public toastCtrl: ToastController,
+				private api: Api) {
+
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
 		//creating form via formbuilder 
 		this.knowledge = formBuilder.group({
 			'f2_points' : ['0'],
@@ -33,15 +47,41 @@ export class KycKnowledgePage {
 	}
 
 	ionViewDidLoad() {
-		// let loading = this.loadingCtrl.create({
-		//     content: 'Loading data...'
-		// });
-		// loading.present();
-		// console.log('ionViewDidLoad KycKnowledgePage', this.knowledge);
-		// setTimeout(() => {
-		//     loading.dismiss();
-		// }, 1000);
+		this.retryButton = false;
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
+		});
+		loading.present();
 		
+		this.api.get('kyc_knowledge/'+ this.farmer_id)
+		.map(res => res.json())
+		.subscribe(
+			data => {
+				if(data.success){
+					console.log(data.data);
+					for (let key in data.data) {
+						if(this.knowledge.controls[key]){
+							this.knowledge.controls[key].setValue(data.data[key], { emitEvent : false });
+						}
+						this.addNew = false;
+					}
+				}
+				else{
+					this.retryButton = true;
+				}
+				loading.dismiss();
+				this.showMessage("All * marked fields are mandatory!", "");
+			}, 
+			err => {
+				console.log(err);
+				setTimeout(() => {
+				    loading.dismiss();
+					this.retryButton = true;
+					this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
+				}, 1000);
+			}
+		);
+
 		//update validation here
 		this.setValidation();
 
@@ -129,12 +169,66 @@ export class KycKnowledgePage {
 		this.knowledge.get('f2_points').setValue(total, { emitEvent: false });
 	}
 
+
+	showMessage(message, style: string, dur?: number){
+		const toast = this.toastCtrl.create({
+	      message: message,
+	      showCloseButton: true,
+	      duration: dur || 5000,
+	      closeButtonText: 'Ok',
+	      cssClass: style,
+	      dismissOnPageChange: true
+	    });
+
+	    toast.present();
+	}
+
 	save(){
+
 		this.submitAttempt = true;
 		if (this.knowledge.valid) {
+
+			let loading = this.loadingCtrl.create({
+			    content: 'Loading data...'
+			});
+			loading.present();
+
+			console.log('is POST ', this.addNew);
+			if(this.addNew){
+				//do post request
+				this.api.post('kyc_knowledge', this.knowledge.value)
+				.map(res => res.json())
+				.subscribe(data => {
+					
+					if(data.success){		
+						this.showMessage("Saved successfully!", "success");
+					}
+				    loading.dismiss();
+
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+			else{
+				//do put request
+				this.api.put('kyc_knowledge', this.knowledge.value)
+				.map(res => res.json())
+				.subscribe(data => {
+				    this.showMessage("Saved successfully!", "success");
+				    loading.dismiss();
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+
 			console.log(this.knowledge.value);
 		}else{
 			console.log('Validation error', this.knowledge.controls);
+			this.showMessage("Please fill valid data!", "danger", 100000);
 		}
 	}
 }

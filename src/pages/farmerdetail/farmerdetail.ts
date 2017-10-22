@@ -15,7 +15,7 @@ interface point<T> {
 
 export class Farmerdetail {
 
-	current_farmer: {id:string, image:string, name: string, address: string, points: string};
+	current_farmer: any;
 	points: point<string>;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){

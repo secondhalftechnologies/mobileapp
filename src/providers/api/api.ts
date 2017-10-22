@@ -1,50 +1,64 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, RequestOptions, URLSearchParams, Headers } from '@angular/http';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+    url: string = 'http://192.168.43.56/payism/web/yard/rest/v1';
+    options: RequestOptions;
 
-  constructor(public http: Http) {
-  }
+    constructor(public http: Http) {
+        let myHeaders: Headers = new Headers;
+        myHeaders.set('Content-Type', 'application/x-www-form-urlencoded');
+        myHeaders.set('Authorization', 'a2d31ce2ecb3c46739b7b0ebb1b45a8b');
 
-  get(endpoint: string, params?: any, options?: RequestOptions) {
-    if (!options) {
-      options = new RequestOptions();
+        this.options = new RequestOptions({ headers: myHeaders });
     }
 
-    // Support easy query params for GET requests
-    if (params) {
-      let p = new URLSearchParams();
-      for (let k in params) {
-        p.set(k, params[k]);
-      }
-      // Set the search field if we have params and don't already have
-      // a search field set in options.
-      options.search = !options.search && p || options.search;
+
+    get(endpoint: string, params?: any) {
+        // Support easy query params for GET requests
+        if (params) {
+            let p = new URLSearchParams();
+            for (let k in params) {
+                p.set(k, params[k]);
+            }
+            // Set the search field if we have params and don't already have
+            // a search field set in options.
+            // this.options.search = !this.options.search && p || this.options.search;
+        }
+
+        return this.http.get(this.url + '/' + endpoint, this.options);
     }
 
-    return this.http.get(this.url + '/' + endpoint, options);
-  }
+    post(endpoint: string, body: any) {
 
-  post(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.post(this.url + '/' + endpoint, body, options);
-  }
+        let params = new URLSearchParams();
+        for(let key in body){
+            params.set(key, body[key]) 
+        }
 
-  put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
-  }
+        return this.http.post(this.url + '/' + endpoint, params, this.options);
+    }
 
-  delete(endpoint: string, options?: RequestOptions) {
-    return this.http.delete(this.url + '/' + endpoint, options);
-  }
+    put(endpoint: string, body: any) {
 
-  patch(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
-  }
+        let params = new URLSearchParams();
+        for(let key in body){
+            params.set(key, body[key]) 
+        }
+        return this.http.put(this.url + '/' + endpoint, params, this.options);
+    }
+
+    delete(endpoint: string) {
+        return this.http.delete(this.url + '/' + endpoint, this.options);
+    }
+
+    patch(endpoint: string, body: any) {
+        return this.http.put(this.url + '/' + endpoint, body, this.options);
+    }
 }

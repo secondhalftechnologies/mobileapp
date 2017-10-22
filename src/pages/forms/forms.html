@@ -18,7 +18,7 @@
     <ion-row>
       <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
         <div padding>
-            <ion-card-header>
+            <!-- <ion-card-header>
               <h1><small>Total : </small>0</h1>
             </ion-card-header>
             <ion-card *ngFor="let form of forms" (click)="onTap(form.pageName)">
@@ -30,7 +30,15 @@
               <ion-card-content>
                  {{form.desc}}
               </ion-card-content>
-            </ion-card>
+            </ion-card> -->
+
+            <ion-list>
+              <button ion-item *ngFor="let form of forms" (click)="onTap(form.pageName)">
+                <ion-icon name="{{form.icon}}" item-start></ion-icon>
+                {{form.title}}
+                <ion-badge item-end color="{{ form.point <= 10 ? 'danger' : (form.point >= 50 ? 'secondary' : 'primary') }}">{{form.point}}</ion-badge>
+              </button>
+            </ion-list>
         </div>
       </ion-col>
     </ion-row>

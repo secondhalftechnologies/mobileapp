@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content class="list-avatar-page">
-  <ion-list>
+  <ion-list *ngIf="!retryButton">
     <ion-list-header>Your Farmers</ion-list-header>
 
     <ion-item-sliding *ngFor="let farmer of items">
@@ -33,8 +33,21 @@
 
   </ion-list>
 
+  <div class="list-retry" padding *ngIf="retryButton">
+    <h6>something went wrong!</h6>
+    <div><button ion-button round outline large color="light" (click)="onRetryClick()">Retry</button></div>
+  </div>
+
+  <ion-infinite-scroll threshold="1%" (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
   <ion-fab right bottom>
     <button ion-fab color="app" (click)="goto('AddFarmerPage')"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+  
 
 </ion-content>

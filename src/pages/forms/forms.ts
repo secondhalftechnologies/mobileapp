@@ -42,35 +42,36 @@ export class Forms {
 
 		if(this.form_name == 'kyc'){
 			this.forms = [
-				{ title: 'Applicant\'s Knowledge',     pageName: 'KycKnowledgePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Applicant\'s Phone Details', pageName: 'KycPhonePage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Family Details',             pageName: 'KycFamilyPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Appliances Motors',          pageName: 'KycAppliancesPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Spouse Details',             pageName: 'KycSpousePage', point: '0', icon : 'woman'},
+				{ title: 'Applicant\'s Knowledge',     pageName: 'KycKnowledgePage', point: '0', icon : 'book'},
+				{ title: 'Applicant\'s Phone Details', pageName: 'KycPhonePage', point: '0', icon : 'phone-portrait'},
+				{ title: 'Family Details',             pageName: 'KycFamilyPage', point: '0', icon : 'people'},
+				{ title: 'Appliances Motors',          pageName: 'KycAppliancesPage', point: '0', icon : 'cog'},
 			];
 		}
 		else if(this.form_name == 'land details'){
 			this.forms = [
-				{ title: 'Farm Land Details',  pageName: 'LandFarmPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Farm Land Details',  pageName: 'LandFarmPage', point: '0', icon : 'locate'},
 			];
 		}
 		else if(this.form_name == 'crop details'){
 			this.forms = [
-				{ title: 'Crop And Cultivation Details',  pageName: 'CropCultivationPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Previous Crop Cycle Details',   pageName: 'CropPreviousPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Current Crop Cycle Details',    pageName: 'CropCurrentPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Crop And Cultivation Details',  pageName: 'CropCultivationPage', point: '0', icon : 'leaf'},
+				{ title: 'Previous Crop Cycle Details',   pageName: 'CropPreviousPage', point: '0', icon : 'leaf'},
+				{ title: 'Current Crop Cycle Details',    pageName: 'CropCurrentPage', point: '0', icon : 'leaf'},
 			];
 		}
 		else if(this.form_name == 'assets'){
 			this.forms = [
-				{ title: 'Assets Details',  pageName: 'AssetsDetailsPage', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Live Stock',      pageName: 'AssetsStockPage',   point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Assets Details',  pageName: 'AssetsDetailsPage', point: '0', icon : 'arrow-round-forward'},
+				{ title: 'Live Stock',      pageName: 'AssetsStockPage',   point: '0', icon : 'arrow-round-forward'},
 			];
 		}
 		else if(this.form_name == 'loan and liability'){
 			this.forms = [
-				{ title: 'Home Loan Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Financial Details',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
-				{ title: 'Financial History',     pageName: '', point: '0', desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'},
+				{ title: 'Home Loan Details',     pageName: '', point: '0', icon : 'logo-usd'},
+				{ title: 'Financial Details',     pageName: '', point: '0', icon : 'cash'},
+				{ title: 'Financial History',     pageName: '', point: '0', icon : 'arrow-round-forward'},
 			];
 		}
 	}
@@ -85,10 +86,7 @@ export class Forms {
 
 	onTap(page: string){
 		if (page) {
-		 	// let loading = this.presentLoading('Please wait...');
-			// loading.present();
-			this.navCtrl.push(page, {});
-			// loading.dismiss();
+			this.navCtrl.push(page, { farmer_id: this.current_farmer.id });
 		}
 	}
 }
