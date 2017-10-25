@@ -17,9 +17,9 @@
 
 <ion-content padding>
 	<form [formGroup]="knowledge" *ngIf="!retryButton">
-		<ion-list>
-			<div>
-				<ion-item>
+		<ion-list ion-grid>
+			<div ion-row>
+				<ion-item ion-col col-md-6 col-xs col-12>
 				    <ion-label floating>Educational Qualification Details <span>*</span></ion-label>
 				    <ion-select formControlName="f2_edudetail" interface="popover" (change)="getTotal()">
 						<ion-option value="illiterate"> Illiterate </ion-option> 
@@ -33,7 +33,7 @@
 		            <p *ngIf="knowledge.controls.f2_edudetail.errors.required">This field is required.</p>
 		        </div>
 
-				<ion-item>
+				<ion-item ion-col col-md-6 col-xs col-12>
 				    <ion-label floating>Regional Language Knowledge <span>*</span></ion-label>
 				    <ion-select formControlName="f2_proficiency" interface="popover">
 				      <ion-option value="read write">Read and Write</ion-option>
@@ -46,7 +46,7 @@
 		           
 		        </div>
 
-				<ion-item>
+				<ion-item ion-col col-md-6 col-xs col-12>
 				    <ion-label floating>Participation In Farming Programs</ion-label>
 				    <ion-select formControlName="f2_participation" interface="popover" (ionChange)="setValidation()">
 				      <ion-option value="yes">Yes</ion-option>
