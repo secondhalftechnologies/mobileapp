@@ -56,7 +56,7 @@ export class KycSpousePage {
 		});
 	}
 
-	// ionViewDidLoad() {
+	ionViewDidLoad() {
 	// 	this.retryButton = false;
 	// 	let loading = this.loadingCtrl.create({
 	// 	    content: 'Loading data...'
@@ -92,23 +92,64 @@ export class KycSpousePage {
 	// 		}
 	// 	);
 
-	// 	//update validation here
-	// 	// this.setValidation();
-	// }
+		//update validation here
+		this.setValidation();
+
+		//Listen for form changes
+		this.spouse.controls['f3_spouse_shg'].valueChanges.subscribe(() => {this.setValidation();});
+		this.spouse.controls['f3_spouse_owned_prop'].valueChanges.subscribe(() => {this.setValidation();});
+		this.spouse.controls['f3_spouse_mfi'].valueChanges.subscribe(() => {this.setValidation();});
+		this.spouse.controls['f3_spouse_mfi'].valueChanges.subscribe(() => {this.setValidation();});
+	}
 
 	setValidation(){
 		let controls = this.spouse.controls;
-		if(controls['f2_participation'].value == 'yes'){
-			controls['f2_typeprog'].enable();
-			controls['f2_durprog' ].enable();
-			controls['f2_condprog'].enable();
-			controls['f2_cropprog'].enable();
+		if(controls['f3_spouse_shg'].value == 'yes'){
+			controls['f3_spouse_shgname'].enable();
 		}
 		else{
-			controls['f2_typeprog'].disable();
-			controls['f2_durprog' ].disable();
-			controls['f2_condprog'].disable();
-			controls['f2_cropprog'].disable();
+			controls['f3_spouse_shgname'].disable();
+			controls['f3_spouse_shgname'].setValue('', { emitEvent : false });
+		}
+
+		if(controls['f3_spouse_owned_prop'].value == 'yes'){
+			controls['f3_spouse_prop_type'].enable();
+			controls['f3_property_details'].enable();
+			controls['f3_spouse_get_any_income'].enable();
+			controls['f3_spouse_yearly_income'].enable();
+		}
+		else{
+			controls['f3_spouse_prop_type'].disable();
+			controls['f3_property_details'].disable();
+			controls['f3_spouse_get_any_income'].disable();
+			controls['f3_spouse_yearly_income'].disable();
+
+			controls['f3_spouse_prop_type'].setValue('', { emitEvent : false });
+			controls['f3_property_details'].setValue('', { emitEvent : false });
+			controls['f3_spouse_get_any_income'].setValue('', { emitEvent : false });
+			controls['f3_spouse_yearly_income'].setValue('', { emitEvent : false });
+		}
+
+
+		if(controls['f3_spouse_mfi'].value == 'yes'){
+			controls['f3_spouse_mfiname'].enable();
+			controls['f3_spouse_mfiamount'].enable();
+		}
+		else{
+			controls['f3_spouse_mfiname'].disable();
+			controls['f3_spouse_mfiamount'].disable();
+
+			controls['f3_spouse_mfiname'].setValue('', { emitEvent : false });
+			controls['f3_spouse_mfiamount'].setValue('', { emitEvent : false });
+		}
+
+
+		if(controls['f3_affliation_status'].value == 'yes'){
+			controls['f3_fpo_name'].enable();
+		}
+		else{
+			controls['f3_fpo_name'].disable();
+			controls['f3_fpo_name'].setValue('', { emitEvent : false });
 		}
 	}
 
