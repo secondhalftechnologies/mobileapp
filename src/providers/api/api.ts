@@ -14,7 +14,7 @@ export class Api {
     constructor(public http: Http) {
         let myHeaders: Headers = new Headers;
         myHeaders.set('Content-Type', 'application/x-www-form-urlencoded');
-        myHeaders.set('Authorization', 'a2d31ce2ecb3c46739b7b0ebb1b45a8b');
+        myHeaders.set('Authorization', '44b03c7f0c2fbf059d1c');
 
         this.options = new RequestOptions({ headers: myHeaders });
     }
@@ -26,13 +26,14 @@ export class Api {
             let p = new URLSearchParams();
             for (let k in params) {
                 p.set(k, params[k]);
+                endpoint += "/" + params[k];
             }
             // Set the search field if we have params and don't already have
             // a search field set in options.
-            // this.options.search = !this.options.search && p || this.options.search;
+            // this.options.search = p;
         }
 
-        return this.http.get(this.url + '/' + endpoint, this.options);
+        return this.http.get(this.url + '/' + endpoint , this.options);
     }
 
     post(endpoint: string, body: any) {

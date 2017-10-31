@@ -17,11 +17,11 @@
     <ion-item-sliding *ngFor="let farmer of items">
       <ion-item (click)="itemTapped($event, farmer)">
         <ion-avatar item-start>
-          <img src="assets/img/{{farmer.image}}">
+          <img src="assets/img/{{farmer.image}}" onerror="this.onerror=null; this.src='assets/img/images.jpg';">
         </ion-avatar>
-        <h2 color="app">{{farmer.name}}</h2>
+        <h2 color="app">{{farmer.fm_name}}</h2>
         <p>{{farmer.address}}</p>
-        <ion-note item-end>{{farmer.points}} %</ion-note>
+        <ion-note item-end>{{farmer.points}}</ion-note>
       </ion-item>
       <ion-item-options>
         <button ion-button color="danger" icon-start>
@@ -41,7 +41,7 @@
   <ion-infinite-scroll threshold="1%" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
-      loadingText="Loading more data...">
+      loadingText="Loading more Farmers...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
