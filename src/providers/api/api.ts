@@ -2,6 +2,10 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, URLSearchParams, Headers } from '@angular/http';
+import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
+import { UserProvider } from '../user/user';
+
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -11,16 +15,19 @@ export class Api {
     url: string = 'http://sqoreyard.com/sqyardpanel/rest/v1'; //'http://localhost/payism/web/yard/rest/v1';
     options: RequestOptions;
 
-    constructor(public http: Http) {
+    constructor(public http: Http, private storage: Storage, public currentUser: UserProvider) {}
+
+    setHeaders(){
         let myHeaders: Headers = new Headers;
         myHeaders.set('Content-Type', 'application/x-www-form-urlencoded');
-        myHeaders.set('Authorization', '44b03c7f0c2fbf059d1c');
-
+        if(this.currentUser.token){
+            myHeaders.set('Authorization', this.currentUser.token);
+        }
         this.options = new RequestOptions({ headers: myHeaders });
     }
 
-
     get(endpoint: string, params?: any) {
+        this.setHeaders();
         // Support easy query params for GET requests
         if (params) {
             let p = new URLSearchParams();
@@ -37,7 +44,7 @@ export class Api {
     }
 
     post(endpoint: string, body: any) {
-
+        this.setHeaders();
         let params = new URLSearchParams();
         for(let key in body){
             params.set(key, body[key]) 
@@ -47,7 +54,7 @@ export class Api {
     }
 
     put(endpoint: string, body: any) {
-
+        this.setHeaders();
         let params = new URLSearchParams();
         for(let key in body){
             params.set(key, body[key]) 

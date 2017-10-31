@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { MenuController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -19,12 +21,13 @@ export class HomePage {
 	doughnutChart: any;
     lineChart: any;
 
-	constructor(private menu: MenuController, public navCtrl: NavController) {
+	constructor(private menu: MenuController, public navCtrl: NavController, public currentUser: UserProvider) {
 		this.menu.enable(true);
+		console.log(currentUser);
 	}	
 
   	ionViewDidLoad() {
- 
+
 	    this.barChart = new Chart(this.barCanvas.nativeElement, {
 
 	        type: 'bar',
@@ -61,7 +64,6 @@ export class HomePage {
 	                }]
 	            }
 	        }
-
 	    });
 
 	    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
