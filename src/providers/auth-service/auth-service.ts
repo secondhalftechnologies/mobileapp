@@ -67,14 +67,14 @@ export class AuthService {
                     let enddate = new Date(this.currentUser.token_expiry);
                     let now = new Date();
 
-                    if(now.getTime() > enddate.getTime()){
-                        console.log('false');
-                        observer.next(false);
-                    }
-                    else{
+                    // if(now.getTime() > enddate.getTime()){
+                    //     console.log('false');
+                    //     observer.next(false);
+                    // }
+                    // else{
                         console.log('yes authenticated true');
                         observer.next(true);
-                    }
+                    // }
                 }
                 else{
                     observer.next(false);

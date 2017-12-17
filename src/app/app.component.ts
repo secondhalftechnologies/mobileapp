@@ -11,7 +11,7 @@ import { AuthService } from '../providers/providers';
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = 'HomePage';
+    rootPage: any = 'PreloadPage';
     // rootPage: any = 'LoginPage';
 
     pages: Array<{title: string, component: any, icon:string}>;
@@ -35,20 +35,23 @@ export class MyApp {
     }
 
     initializeApp() {
-        this.platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
-            this.auth.isAuthenticated().subscribe(success => {
-                if(success){
-                    this.nav.setRoot('HomePage');
-                }
-                else{
-                    this.nav.setRoot('LoginPage');
-                }
+        setTimeout( () => {
+
+            this.platform.ready().then(() => {
+                // Okay, so the platform is ready and our plugins are available.
+                // Here you can do any higher level native things you might need.
+                this.statusBar.styleDefault();
+                this.splashScreen.hide();
+                this.auth.isAuthenticated().subscribe(success => {
+                    if(success){
+                        this.nav.setRoot('HomePage');
+                    }
+                    else{
+                        this.nav.setRoot('LoginPage');
+                    }
+                });
             });
-        });
+        }, 2000);
     }
 
     openPage(page) {

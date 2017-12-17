@@ -70,7 +70,7 @@ export class KycKnowledgePage {
 					this.retryButton = true;
 				}
 				loading.dismiss();
-				this.showMessage("All * marked fields are mandatory!", "");
+				// this.showMessage("All * marked fields are mandatory!", "black");
 			}, 
 			err => {
 				console.log(err);
