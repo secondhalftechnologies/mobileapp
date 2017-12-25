@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../providers/api/api';
+import 'rxjs/add/operator/map';
 /**
  * Generated class for the AddFarmerPage page.
  *
@@ -19,7 +21,13 @@ export class AddFarmerPage {
     submitAttempt: boolean = false;
     retryButton: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+    constructor(public navCtrl: NavController, 
+                public navParams: NavParams,
+                private loadingCtrl: LoadingController,
+                public toastCtrl: ToastController,
+                private api: Api,
+                public formBuilder: FormBuilder) {
+
         this.personal = formBuilder.group({
             txt_name: ['', Validators.compose([Validators.maxLength(100), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
             txt_father_name: ['', Validators.compose([Validators.maxLength(100), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -58,15 +66,19 @@ export class AddFarmerPage {
             ddl_c_village: ['', Validators.required],
             txt_c_pincode: ['', Validators.compose([Validators.pattern('^[0-9]{6}$'), Validators.required])],
         });
+
+        //Listen for form changes
+        this.personal.controls['f1_required_loan'].valueChanges.subscribe(() => {this.setValidation();});
+        this.personal.controls['ddl_residence_status'].valueChanges.subscribe(() => {this.setValidation();});
+        this.personal.controls.txt_dob.valueChanges.subscribe(() => {
+            let dob = this.personal.controls.txt_dob.value;
+            this.personal.controls.txt_age.setValue(this.getAge(dob));
+        });
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AddFarmerPage');
         this.setValidation();
-
-        //Listen for form changes
-        this.personal.controls['f1_required_loan'].valueChanges.subscribe(() => {this.setValidation();});
-        this.personal.controls['ddl_residence_status'].valueChanges.subscribe(() => {this.setValidation();});
     }
 
     setValidation() {
@@ -96,13 +108,47 @@ export class AddFarmerPage {
     save() {
 
         this.submitAttempt = true;
-        console.log(this.personal.value);
         if (!this.personal.valid) {
-
+            this.showMessage("Please fill all mandatory data", "danger");
         } else {
+
+            let loading = this.loadingCtrl.create({
+                content: 'Please wait...'
+            });
+            loading.present();
+
             console.log("success!")
             console.log(this.personal.value);
+            //do post request
+            this.api.post('farmer', this.personal.value)
+            .map(res => res.json())
+            .subscribe(data => {
+                
+                if(data.success){        
+                    this.showMessage("Added successfully!", "success");
+                }
+                loading.dismiss();
+                this.navCtrl.pop();
+
+            }, err => {
+                console.log(err);
+                this.showMessage("Faild to add, please try again!", "danger");
+                loading.dismiss();
+            });
         }
+    }
+
+    showMessage(message, style: string, dur?: number){
+        const toast = this.toastCtrl.create({
+          message: message,
+          showCloseButton: true,
+          duration: dur || 5000,
+          closeButtonText: 'Ok',
+          cssClass: style,
+          dismissOnPageChange: true
+        });
+
+        toast.present();
     }
 
     copyAddress() {
@@ -115,5 +161,16 @@ export class AddFarmerPage {
         this.personal.controls['ddl_c_village'].setValue(this.personal.value.ddl_p_village);
         this.personal.controls['txt_c_pincode'].setValue(this.personal.value.txt_p_pincode);
         console.log(this.personal.value);
+    }
+
+    getAge(dateString) {
+        let today = new Date();
+        let birthDate = new Date(dateString);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
     }
 }

@@ -15,11 +15,15 @@ interface point<T> {
 
 export class Farmerdetail {
 
-	current_farmer: any;
-	points: point<string>;
+	current_farmer: any = {};
+	points: any =[];
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){
-		this.current_farmer = navParams.get('farmer');
+		
+	}
+
+	ionViewDidEnter(){
+		this.current_farmer = this.navParams.get('farmer');
 		this.getFarmerPoints(this.current_farmer.id);
 		
 		let loading = this.presentLoading('Please wait...');
@@ -49,6 +53,8 @@ export class Farmerdetail {
 	}
 
 	showForm(name:string){
+
+		console.log(this.current_farmer);
 		this.navCtrl.push('Forms', {
 	      farmer: this.current_farmer,
 	      form_name : name

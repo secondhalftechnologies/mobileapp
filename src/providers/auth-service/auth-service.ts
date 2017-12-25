@@ -28,6 +28,7 @@ export class AuthService {
                     if (data.success == true) {
                         this.storage.set('user_data', data.data);
                         this.currentUser.setUser(
+                                data.data.id,
                                 data.data.fname,
                                 data.data.emailId,
                                 data.data.userType,
@@ -56,6 +57,7 @@ export class AuthService {
             this.storage.get('user_data').then(val => {
                 if(val){
                     this.currentUser.setUser(
+                            val.id,
                             val.fname,
                             val.emailId,
                             val.userType,

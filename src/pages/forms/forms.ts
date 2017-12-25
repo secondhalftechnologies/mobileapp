@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
 
 interface point<T> {
     [K: string]: T;
@@ -14,15 +15,15 @@ interface point<T> {
 
 export class Forms {
 
-	current_farmer: {id:string, image:string, name: string, address: string, points: string};
+	current_farmer: {fm_id:string, image:string, name: string, address: string, points: string};
 	form_name: string;
 	points: point<string>;
 	forms:Array<any>;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController){
+	constructor(public navCtrl: NavController, public caUser: UserProvider, public navParams: NavParams, public loadingCtrl: LoadingController){
 		this.current_farmer = navParams.get('farmer');
 		this.form_name = navParams.get('form_name');
-		this.getFarmerPoints(this.current_farmer.id);
+		this.getFarmerPoints(this.current_farmer.fm_id);
 		let loading = this.presentLoading('Please wait...');
 		loading.present();
 		setTimeout(() => {
@@ -85,8 +86,9 @@ export class Forms {
 	}
 
 	onTap(page: string){
+		console.log(this.current_farmer);
 		if (page) {
-			this.navCtrl.push(page, { farmer_id: this.current_farmer.id });
+			this.navCtrl.push(page, { farmer_id: this.current_farmer.fm_id, ca_id : this.caUser.id });
 		}
 	}
 }

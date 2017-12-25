@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../providers/api/api';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the CropPreviousAddPage page.
@@ -18,8 +20,18 @@ export class CropPreviousAddPage {
 
   	previous: FormGroup;
   	submitAttempt: boolean = false;
+  	addNew: boolean        = true;
+	farmer_id: string;
+	ca_id: string;
+	id: any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+	constructor(public navCtrl: NavController, 
+				public navParams: NavParams, 
+				public formBuilder: FormBuilder, 
+				private loadingCtrl: LoadingController, 
+				public toastCtrl: ToastController,
+				private api: Api) 
+	{
 		this.previous = formBuilder.group({
 			'f11_points' : ['0'],
 
@@ -32,33 +44,70 @@ export class CropPreviousAddPage {
 			'f11_damaged_prev_crop' : ['', Validators.required],
 			'f11_what_was_the_reason1' : ['', Validators.required],
 		});
+		
+		//Listen for form changes
+		this.previous.controls['f11_income'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.previous.controls['f11_diseases'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.previous.controls['f11_fertilizers'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.previous.controls['f11_damaged_prev_crop'].valueChanges.subscribe(() => {
+			this.setValidation();
+			this.getTotal();
+		});
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LandFarmAddPage');
 
-		this.setValidation();
+		//set farmer_id and ca_id
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
+		this.ca_id = this.navParams.get('ca_id') || 0;
+		this.id = this.navParams.get('id') || false;
 
-		//Listen for form changes
-		this.previous.controls['f11_income'].valueChanges.subscribe(() => {
-			this.getTotal();
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
 		});
+		loading.present();
 
-		//Listen for form changes
-		this.previous.controls['f11_diseases'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
+		if(this.id !== false){
+			//get data from server
+			this.api.get('crop_previous/'+ this.id)
+			.map(res => res.json())
+			.subscribe(
+				data => {
+					if(data.success){
+						if(data.data[0] != undefined){
+							this.addNew = false;
+							let webData = data.data[0];
+							for (let key in webData) {
+								if(this.previous.controls[key] != undefined){
+									this.previous.controls[key].setValue(webData[key]);
+								}
+							}
+						}
+					}
 
-		//Listen for form changes
-		this.previous.controls['f11_fertilizers'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
-		//Listen for form changes
-		this.previous.controls['f11_damaged_prev_crop'].valueChanges.subscribe(() => {
-			this.setValidation();
-			this.getTotal();
-		});
+					loading.dismiss();
+				}, 
+				err => {
+					console.log(err);
+					setTimeout(() => {
+					    loading.dismiss();
+						this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
+					}, 1000);
+				}
+			);
+		}
+		else{
+			setTimeout(() => {
+			    loading.dismiss();
+			}, 100);
+		}
 	}
 
 	setValidation(){
@@ -146,12 +195,95 @@ export class CropPreviousAddPage {
 
 
 	save(){
+
 		this.submitAttempt = true;
 		if (this.previous.valid) {
-			console.log(this.previous.value);
+
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+			});
+			loading.present();
+			
+			console.log('is POST ', this.addNew);
+
+			let formData = this.previous.value;
+			formData['fm_id']   = this.farmer_id;
+			formData['fm_caid'] = this.ca_id;
+			console.log(formData);
+
+			if(this.addNew){
+				//do post request
+				this.api.post('crop_previous', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+					
+				    loading.dismiss();
+					if(data.success){		
+						let callback = this.navParams.get("callback") || false;
+		                if(callback){
+		                    callback(true).then(()=>{
+		                        this.navCtrl.pop();
+		                    });
+		                }else{
+		                    this.navCtrl.pop();
+		                }
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+			else{
+				//do put request
+				formData['id'] = this.id;
+
+				this.api.put('crop_previous', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+
+				    loading.dismiss();
+				    if(data.success){		
+						let callback = this.navParams.get("callback") || false;
+		                if(callback){
+		                    callback(true).then(()=>{
+		                        this.navCtrl.pop();
+		                    });
+		                }else{
+		                    this.navCtrl.pop();
+		                }
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+					
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+
 		}else{
-			console.log('Validation error');
+			console.log('Validation error', this.previous.controls);
+			this.showMessage("Please fill valid data!", "danger", 100000);
 		}
+	}
+
+	//Message toaster
+	showMessage(message, style: string, dur?: number){
+		const toast = this.toastCtrl.create({
+	      message: message,
+	      showCloseButton: true,
+	      duration: dur || 5000,
+	      closeButtonText: 'Ok',
+	      cssClass: style,
+	      dismissOnPageChange: true
+	    });
+
+	    toast.present();
 	}
 
 }

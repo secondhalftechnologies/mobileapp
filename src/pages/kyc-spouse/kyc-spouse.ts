@@ -19,6 +19,7 @@ export class KycSpousePage {
 
 	spouse: FormGroup;
 	farmer_id: string;
+	ca_id: string;
 	submitAttempt: boolean = false;
 	retryButton: boolean = false;
 	addNew: boolean = true;
@@ -30,68 +31,30 @@ export class KycSpousePage {
 				public toastCtrl: ToastController,
 				private api: Api) {
 
-		this.farmer_id = this.navParams.get('farmer_id') || 0;
 		//creating form via formbuilder 
 		this.spouse = formBuilder.group({
 			'f3_points' : ['0'],
 
-			'f3_spouse_fname' : ['', Validators.compose([Validators.maxLength(50), Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+			'f3_spouse_fname' : ['', Validators.compose([Validators.maxLength(50), Validators.minLength(0), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
 			'f3_spouse_age' : ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern('^[0-9]+$')])],
 			'f3_spouse_mobno' : ['', Validators.compose([Validators.required, Validators.minLength(10) ,Validators.maxLength(10), Validators.pattern('^[0-9]+$')])],
 			'f3_spouse_adhno' : ['', Validators.compose([Validators.required, Validators.minLength(12) ,Validators.maxLength(12), Validators.pattern('^[0-9]+$')])],
 			'f3_spouse_shg' : ['', Validators.required],
-			'f3_spouse_shgname' : ['', Validators.compose([Validators.maxLength(50), Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+			'f3_spouse_shgname' : ['', Validators.compose([Validators.maxLength(50), Validators.minLength(0), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
 			'f3_spouse_occp' : ['', Validators.required],
 			'f3_spouse_owned_prop' : ['', Validators.required],
 			'f3_spouse_prop_type' : ['', Validators.required],
-			'f3_property_details' : ['', Validators.compose([Validators.maxLength(100), Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+			'f3_property_details' : ['', Validators.compose([Validators.maxLength(100), Validators.minLength(0), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
 			'f3_spouse_get_any_income' : ['', Validators.required],
 			'f3_spouse_yearly_income' : ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')])],
 			'f3_spouse_mfi' : ['', Validators.required],
 			'f3_spouse_mfiname' : ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
 			'f3_spouse_mfiamount' : ['', Validators.compose([Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')])],
 			'f3_affliation_status' : ['', Validators.required],
-			'f3_fpo_name' : ['', Validators.compose([Validators.maxLength(100), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-			'f3_bank_name' : ['', Validators.compose([Validators.maxLength(100), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+			'f3_fpo_name' : ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+			'f3_bank_name' : ['', Validators.compose([Validators.maxLength(100), Validators.required])],
 		});
-	}
-
-	ionViewDidLoad() {
-	// 	this.retryButton = false;
-	// 	let loading = this.loadingCtrl.create({
-	// 	    content: 'Loading data...'
-	// 	});
-	// 	loading.present();
 		
-	// 	this.api.get('kyc_spouse/'+ this.farmer_id)
-	// 	.map(res => res.json())
-	// 	.subscribe(
-	// 		data => {
-	// 			if(data.success){
-	// 				console.log(data.data);
-	// 				for (let key in data.data) {
-	// 					if(this.spouse.controls[key]){
-	// 						this.spouse.controls[key].setValue(data.data[key], { emitEvent : false });
-	// 					}
-	// 					this.addNew = false;
-	// 				}
-	// 			}
-	// 			else{
-	// 				this.retryButton = true;
-	// 			}
-	// 			loading.dismiss();
-	// 			this.showMessage("All * marked fields are mandatory!", "");
-	// 		}, 
-	// 		err => {
-	// 			console.log(err);
-	// 			setTimeout(() => {
-	// 			    loading.dismiss();
-	// 				this.retryButton = true;
-	// 				this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
-	// 			}, 1000);
-	// 		}
-	// 	);
-
 		//update validation here
 		this.setValidation();
 
@@ -100,6 +63,52 @@ export class KycSpousePage {
 		this.spouse.controls['f3_spouse_owned_prop'].valueChanges.subscribe(() => {this.setValidation();});
 		this.spouse.controls['f3_spouse_mfi'].valueChanges.subscribe(() => {this.setValidation();});
 		this.spouse.controls['f3_spouse_mfi'].valueChanges.subscribe(() => {this.setValidation();});
+	}
+
+	ionViewDidLoad() {
+		
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
+		this.ca_id = this.navParams.get('ca_id') || 0;
+		
+		
+		// this.retryButton = false;
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
+		});
+		loading.present();
+		
+		this.api.get('kyc_spouse_details/'+ this.farmer_id)
+		.map(res => res.json())
+		.subscribe(
+			data => {
+				if(data.success){
+					if(data.data[0] != undefined){
+						this.addNew = false;
+						let webData = data.data[0];
+						for (let key in webData) {
+							if(this.spouse.controls[key] != undefined){
+								this.spouse.controls[key].setValue(webData[key]);
+							}
+						}
+					}
+				}
+				else{
+					this.retryButton = true;
+				}
+
+				loading.dismiss();
+				// this.showMessage("All * marked fields are mandatory!", "black");
+			}, 
+			err => {
+				console.log(err);
+				setTimeout(() => {
+				    loading.dismiss();
+					this.retryButton = true;
+					this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
+				}, 1000);
+			}
+		);
+
 	}
 
 	setValidation(){
@@ -234,21 +243,30 @@ export class KycSpousePage {
 		if (this.spouse.valid) {
 
 			let loading = this.loadingCtrl.create({
-			    content: 'Loading data...'
+			    content: 'Please wait...'
 			});
 			loading.present();
-
+			
 			console.log('is POST ', this.addNew);
+
+			let formData = this.spouse.value;
+			formData['fm_id'] = this.farmer_id;
+			formData['fm_caid'] = this.ca_id;
+			console.log(formData);
+
+
 			if(this.addNew){
 				//do post request
-				this.api.post('kyc_spouse', this.spouse.value)
+				this.api.post('kyc_spouse_details', formData)
 				.map(res => res.json())
 				.subscribe(data => {
 					
+					loading.dismiss();
 					if(data.success){		
-						this.showMessage("Saved successfully!", "success");
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
 					}
-				    loading.dismiss();
 
 				}, err => {
 					console.log(err);
@@ -258,11 +276,15 @@ export class KycSpousePage {
 			}
 			else{
 				//do put request
-				this.api.put('kyc_spouse', this.spouse.value)
+				this.api.put('kyc_spouse_details', formData)
 				.map(res => res.json())
 				.subscribe(data => {
-				    this.showMessage("Saved successfully!", "success");
 				    loading.dismiss();
+				    if(data.success){		
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
 				}, err => {
 					console.log(err);
 					this.showMessage("Data not updated, please try again!", "danger");

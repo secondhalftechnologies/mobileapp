@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../providers/api/api';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the LandFarmAddPage page.
@@ -18,8 +20,18 @@ export class LandFarmAddPage {
 
     land: FormGroup;
     submitAttempt: boolean = false;
+    addNew: boolean        = true;
+	farmer_id: string;
+	ca_id: string;
+	id: any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+	constructor(public navCtrl: NavController, 
+				public navParams: NavParams, 
+				public formBuilder: FormBuilder, 
+				private loadingCtrl: LoadingController, 
+				public toastCtrl: ToastController,
+				private api: Api) 
+	{
 		this.land = formBuilder.group({
 			'f9_points' : ['0'],
 
@@ -40,6 +52,24 @@ export class LandFarmAddPage {
 			'f9_soil_tested' : ['', Validators.required],
 			'f9_soil_depth' : ['', Validators.compose([ Validators.required, Validators.maxLength(6), Validators.pattern('^[+-]?([0-9]*[.])?[0-9]+$')]) ],
 			'f9_source_of_water' : ['', Validators.required],
+		});
+		
+		//Listen for form changes
+		this.land.controls['f9_land_size'].valueChanges.subscribe(() => {
+			this.getTotal()
+		});
+		this.land.controls['f9_owner'].valueChanges.subscribe(() => {
+			this.setValidation();
+			this.getTotal()
+		});
+		this.land.controls['f9_soil_type'].valueChanges.subscribe(() => {
+			this.getTotal()
+		});
+		this.land.controls['f9_soil_tested'].valueChanges.subscribe(() => {
+			this.getTotal()
+		});
+		this.land.controls['f9_source_of_water'].valueChanges.subscribe(() => {
+			this.getTotal()
 		});
 	}
 
@@ -72,34 +102,53 @@ export class LandFarmAddPage {
 	}
 
 
-	ionViewDidLoad() {
+	ionViewDidEnter() {
 		console.log('ionViewDidLoad LandFarmAddPage');
+		
+		//set farmer_id and ca_id
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
+		this.ca_id = this.navParams.get('ca_id') || 0;
+		this.id = this.navParams.get('id') || false;
 
-		//Listen for form changes
-		this.land.controls['f9_land_size'].valueChanges.subscribe(() => {
-			this.getTotal()
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
 		});
+		loading.present();
 
-		//Listen for form changes
-		this.land.controls['f9_owner'].valueChanges.subscribe(() => {
-			this.setValidation();
-			this.getTotal()
-		});
+		if(this.id !== false){
+			//get data from server
+			this.api.get('land_farms/'+ this.id)
+			.map(res => res.json())
+			.subscribe(
+				data => {
+					if(data.success){
+						if(data.data[0] != undefined){
+							this.addNew = false;
+							let webData = data.data[0];
+							for (let key in webData) {
+								if(this.land.controls[key] != undefined){
+									this.land.controls[key].setValue(webData[key]);
+								}
+							}
+						}
+					}
 
-		//Listen for form changes
-		this.land.controls['f9_soil_type'].valueChanges.subscribe(() => {
-			this.getTotal()
-		});
-
-		//Listen for form changes
-		this.land.controls['f9_soil_tested'].valueChanges.subscribe(() => {
-			this.getTotal()
-		});
-
-		//Listen for form changes
-		this.land.controls['f9_source_of_water'].valueChanges.subscribe(() => {
-			this.getTotal()
-		});
+					loading.dismiss();
+				}, 
+				err => {
+					console.log(err);
+					setTimeout(() => {
+					    loading.dismiss();
+						this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
+					}, 1000);
+				}
+			);
+		}
+		else{
+			setTimeout(() => {
+			    loading.dismiss();
+			}, 100);
+		}
 	}
 
 
@@ -249,12 +298,95 @@ export class LandFarmAddPage {
 	}
 
 	save(){
+
 		this.submitAttempt = true;
 		if (this.land.valid) {
-			console.log(this.land.value);
+
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+			});
+			loading.present();
+			
+			console.log('is POST ', this.addNew);
+
+			let formData = this.land.value;
+			formData['fm_id']   = this.farmer_id;
+			formData['fm_caid'] = this.ca_id;
+			console.log(formData);
+
+			if(this.addNew){
+				//do post request
+				this.api.post('land_farms', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+					
+				    loading.dismiss();
+					if(data.success){		
+						let callback = this.navParams.get("callback") || false;
+		                if(callback){
+		                    callback(true).then(()=>{
+		                        this.navCtrl.pop();
+		                    });
+		                }else{
+		                    this.navCtrl.pop();
+		                }
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+			else{
+				//do put request
+				formData['id'] = this.id;
+
+				this.api.put('land_farms', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+
+				    loading.dismiss();
+				    if(data.success){		
+						let callback = this.navParams.get("callback") || false;
+		                if(callback){
+		                    callback(true).then(()=>{
+		                        this.navCtrl.pop();
+		                    });
+		                }else{
+		                    this.navCtrl.pop();
+		                }
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+					
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+
 		}else{
-			console.log('Validation error');
+			console.log('Validation error', this.land.controls);
+			this.showMessage("Please fill valid data!", "danger", 100000);
 		}
+	}
+
+	//Message toaster
+	showMessage(message, style: string, dur?: number){
+		const toast = this.toastCtrl.create({
+	      message: message,
+	      showCloseButton: true,
+	      duration: dur || 5000,
+	      closeButtonText: 'Ok',
+	      cssClass: style,
+	      dismissOnPageChange: true
+	    });
+
+	    toast.present();
 	}
 	
 

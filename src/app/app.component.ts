@@ -42,14 +42,14 @@ export class MyApp {
                 // Here you can do any higher level native things you might need.
                 this.statusBar.styleDefault();
                 this.splashScreen.hide();
-                this.auth.isAuthenticated().subscribe(success => {
-                    if(success){
-                        this.nav.setRoot('HomePage');
-                    }
-                    else{
-                        this.nav.setRoot('LoginPage');
-                    }
-                });
+                // this.auth.isAuthenticated().subscribe(success => {
+                //     if(success){
+                //         this.nav.setRoot('HomePage');
+                //     }
+                //     else{
+                //         this.nav.setRoot('LoginPage');
+                //     }
+                // });
             });
         }, 2000);
     }

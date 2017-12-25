@@ -146,7 +146,7 @@
 					<div *ngIf="spouse.controls.f3_spouse_get_any_income.value == 'yes'">
 						<ion-item ion-col col-md-6 col-xs col-12>
 						    <ion-label floating>Spouse Income Per Year</ion-label>
-				            <ion-input formControlName="f3_spouse_yearly_income" type="text" ></ion-input>
+				            <ion-input formControlName="f3_spouse_yearly_income" type="number" ></ion-input>
 						</ion-item>
 						<div *ngIf="!spouse.controls.f3_spouse_yearly_income.valid  && (spouse.controls.f3_spouse_yearly_income.dirty || submitAttempt)">
 				            <p *ngIf="spouse.controls.f3_spouse_yearly_income.errors.required">This field is required.</p>
@@ -180,7 +180,7 @@
 
 			        <ion-item ion-col col-md-6 col-xs col-12>
 					    <ion-label floating>Amount Taken From Microfinance</ion-label>
-			            <ion-input formControlName="f3_spouse_mfiamount" type="text" ></ion-input>
+			            <ion-input formControlName="f3_spouse_mfiamount" type="number" ></ion-input>
 					</ion-item>
 					<div *ngIf="!spouse.controls.f3_spouse_mfiamount.valid  && (spouse.controls.f3_spouse_mfiamount.dirty || submitAttempt)">
 			            <p *ngIf="spouse.controls.f3_spouse_mfiamount.errors.required">This field is required.</p>

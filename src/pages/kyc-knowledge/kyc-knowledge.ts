@@ -20,9 +20,10 @@ export class KycKnowledgePage {
 
 	knowledge: FormGroup;
 	farmer_id: string;
+	ca_id: string;
 	submitAttempt: boolean = false;
-	retryButton: boolean = false;
-	addNew: boolean = true;
+	retryButton: boolean   = false;
+	addNew: boolean        = true;
 
 	constructor(public navCtrl: NavController, 
 				public navParams: NavParams, 
@@ -31,7 +32,7 @@ export class KycKnowledgePage {
 				public toastCtrl: ToastController,
 				private api: Api) {
 
-		this.farmer_id = this.navParams.get('farmer_id') || 0;
+
 		//creating form via formbuilder 
 		this.knowledge = formBuilder.group({
 			'f2_points' : ['0'],
@@ -44,31 +45,48 @@ export class KycKnowledgePage {
 			'f2_condprog' : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)]) ],
 			'f2_cropprog' : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)]) ],
 		});
+
+		//update validation here
+		this.setValidation();
+
+		//Listen for form changes
+		this.knowledge.controls['f2_edudetail'].valueChanges.subscribe(() => {this.getTotal(); this.setValidation();});
+		this.knowledge.controls['f2_proficiency'].valueChanges.subscribe(() => {this.getTotal(); this.setValidation();});
+		this.knowledge.controls['f2_participation'].valueChanges.subscribe(() => {this.getTotal(); this.setValidation();});
 	}
 
-	ionViewDidLoad() {
+	ionViewDidEnter() {
+
+		//set farmer_id and ca_id
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
+		this.ca_id = this.navParams.get('ca_id') || 0;
+
 		this.retryButton = false;
 		let loading = this.loadingCtrl.create({
 		    content: 'Loading data...'
 		});
 		loading.present();
 		
+		//get data from server
 		this.api.get('kyc_knowledge/'+ this.farmer_id)
 		.map(res => res.json())
 		.subscribe(
 			data => {
 				if(data.success){
-					console.log(data.data);
-					for (let key in data.data) {
-						if(this.knowledge.controls[key]){
-							this.knowledge.controls[key].setValue(data.data[key], { emitEvent : false });
-						}
+					if(data.data[0] != undefined){
 						this.addNew = false;
+						let webData = data.data[0];
+						for (let key in webData) {
+							if(this.knowledge.controls[key] != undefined){
+								this.knowledge.controls[key].setValue(webData[key]);
+							}
+						}
 					}
 				}
 				else{
 					this.retryButton = true;
 				}
+
 				loading.dismiss();
 				// this.showMessage("All * marked fields are mandatory!", "black");
 			}, 
@@ -82,15 +100,9 @@ export class KycKnowledgePage {
 			}
 		);
 
-		//update validation here
-		this.setValidation();
-
-		//Listen for form changes
-		this.knowledge.controls['f2_edudetail'].valueChanges.subscribe(() => {this.getTotal();});
-		this.knowledge.controls['f2_proficiency'].valueChanges.subscribe(() => {this.getTotal();});
-		this.knowledge.controls['f2_participation'].valueChanges.subscribe(() => {this.getTotal();});
 	}
 
+	//validation function
 	setValidation(){
 		let controls = this.knowledge.controls;
 		if(controls['f2_participation'].value == 'yes'){
@@ -107,6 +119,7 @@ export class KycKnowledgePage {
 		}
 	}
 
+	//point calculations
 	getTotal(){
 
 		let values = this.knowledge.getRawValue();
@@ -169,7 +182,7 @@ export class KycKnowledgePage {
 		this.knowledge.get('f2_points').setValue(total, { emitEvent: false });
 	}
 
-
+	//Message toaster
 	showMessage(message, style: string, dur?: number){
 		const toast = this.toastCtrl.create({
 	      message: message,
@@ -183,27 +196,36 @@ export class KycKnowledgePage {
 	    toast.present();
 	}
 
+	//on save(check-mark) button click
 	save(){
 
 		this.submitAttempt = true;
 		if (this.knowledge.valid) {
 
 			let loading = this.loadingCtrl.create({
-			    content: 'Loading data...'
+			    content: 'Please wait...'
 			});
 			loading.present();
-
+			
 			console.log('is POST ', this.addNew);
+
+			let formData = this.knowledge.value;
+			formData['fm_id'] = this.farmer_id;
+			formData['fm_caid'] = this.ca_id;
+			console.log(formData);
+
 			if(this.addNew){
 				//do post request
-				this.api.post('kyc_knowledge', this.knowledge.value)
+				this.api.post('kyc_knowledge', formData)
 				.map(res => res.json())
 				.subscribe(data => {
 					
-					if(data.success){		
-						this.showMessage("Saved successfully!", "success");
-					}
 				    loading.dismiss();
+					if(data.success){		
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
 
 				}, err => {
 					console.log(err);
@@ -213,11 +235,17 @@ export class KycKnowledgePage {
 			}
 			else{
 				//do put request
-				this.api.put('kyc_knowledge', this.knowledge.value)
+				this.api.put('kyc_knowledge', formData)
 				.map(res => res.json())
 				.subscribe(data => {
-				    this.showMessage("Saved successfully!", "success");
+
 				    loading.dismiss();
+				    if(data.success){		
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+					
 				}, err => {
 					console.log(err);
 					this.showMessage("Data not updated, please try again!", "danger");
@@ -225,7 +253,6 @@ export class KycKnowledgePage {
 				});
 			}
 
-			console.log(this.knowledge.value);
 		}else{
 			console.log('Validation error', this.knowledge.controls);
 			this.showMessage("Please fill valid data!", "danger", 100000);

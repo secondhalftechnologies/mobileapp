@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../providers/api/api';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the AssetsDetailsPage page.
@@ -18,8 +20,17 @@ export class AssetsDetailsPage {
 
 	assets: FormGroup;
 	submitAttempt: boolean = false;
+	addNew: boolean        = true;
+	farmer_id: string;
+	ca_id: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+	constructor(public navCtrl: NavController, 
+				public navParams: NavParams, 
+				public formBuilder: FormBuilder, 
+				private loadingCtrl: LoadingController, 
+				public toastCtrl: ToastController,
+				private api: Api) 
+	{
 		this.assets = formBuilder.group({
 			'f12_points' : ['0'],
 
@@ -31,8 +42,73 @@ export class AssetsDetailsPage {
 			'f12_name_of_other_assets' : [''],
 			'f12_mention_value_of_assets' : ['', Validators.compose([ Validators.required, Validators.maxLength(10), Validators.pattern('^[+-]?([0-9]*[.])?[0-9]+$')]) ],
 		});
+		
+		this.setValidation();
+
+		//Listen for form changes
+		this.assets.controls['f12_any_other_assets'].valueChanges.subscribe(() => {
+			this.setValidation();
+			this.getTotal();
+		});
+		this.assets.controls['f12_vehicle'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.assets.controls['f12_total_val_of_vehical'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.assets.controls['f12_machinery'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.assets.controls['f12_total_val_of_machinery'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
+		this.assets.controls['f12_mention_value_of_assets'].valueChanges.subscribe(() => {
+			this.getTotal();
+		});
 	}
 
+
+	ionViewDidEnter() {
+		console.log('ionViewDidLoad AssetsDetailsPage');
+		//set farmer_id and ca_id
+		this.farmer_id = this.navParams.get('farmer_id') || 0;
+		this.ca_id = this.navParams.get('ca_id') || 0;
+
+		let loading = this.loadingCtrl.create({
+		    content: 'Loading data...'
+		});
+		loading.present();
+
+		//get data from server
+		this.api.get('assets_details/'+ this.farmer_id)
+		.map(res => res.json())
+		.subscribe(
+			data => {
+				if(data.success){
+					if(data.data[0] != undefined){
+						this.addNew = false;
+						let webData = data.data[0];
+						for (let key in webData) {
+							if(this.assets.controls[key] != undefined){
+								this.assets.controls[key].setValue(webData[key]);
+							}
+						}
+					}
+				}
+
+				loading.dismiss();
+				// this.showMessage("All * marked fields are mandatory!", "black");
+			}, 
+			err => {
+				console.log(err);
+				setTimeout(() => {
+				    loading.dismiss();
+					this.showMessage("Something went wrong, make sure that Internet connection is on!", "danger");
+				}, 1000);
+			}
+		);
+	}
+	
 	setValidation(){
 		let controls = this.assets.controls;
 		if(controls['f12_any_other_assets'].value == 'yes'){
@@ -45,38 +121,6 @@ export class AssetsDetailsPage {
 			controls['f12_name_of_other_assets'].disable();
 			controls['f12_mention_value_of_assets'].disable();
 		}
-	}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad AssetsDetailsPage');
-
-		this.setValidation();
-		//Listen for form changes
-		this.assets.controls['f12_any_other_assets'].valueChanges.subscribe(() => {
-			this.setValidation();
-			this.getTotal();
-		});
-
-		this.assets.controls['f12_vehicle'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
-		this.assets.controls['f12_total_val_of_vehical'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
-		this.assets.controls['f12_machinery'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
-		this.assets.controls['f12_total_val_of_machinery'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
-		this.assets.controls['f12_mention_value_of_assets'].valueChanges.subscribe(() => {
-			this.getTotal();
-		});
-
 	}
 
 	getTotal(){
@@ -198,12 +242,79 @@ export class AssetsDetailsPage {
 	}
 
 	save(){
+
 		this.submitAttempt = true;
 		if (this.assets.valid) {
-			console.log(this.assets.value);
+
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+			});
+			loading.present();
+			
+			console.log('is POST ', this.addNew);
+
+			let formData = this.assets.value;
+			formData['fm_id'] = this.farmer_id;
+			formData['fm_caid'] = this.ca_id;
+			console.log(formData);
+
+			if(this.addNew){
+				//do post request
+				this.api.post('assets_details', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+					
+				    loading.dismiss();
+					if(data.success){		
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+			else{
+				//do put request
+				this.api.put('assets_details', formData)
+				.map(res => res.json())
+				.subscribe(data => {
+
+				    loading.dismiss();
+				    if(data.success){		
+						this.navCtrl.pop();
+					}else{
+						this.showMessage("Some thing went wrong!, Please try again.", "danger");
+					}
+					
+				}, err => {
+					console.log(err);
+					this.showMessage("Data not updated, please try again!", "danger");
+				    loading.dismiss();
+				});
+			}
+
 		}else{
-			console.log('Validation error');
+			console.log('Validation error', this.assets.controls);
+			this.showMessage("Please fill valid data!", "danger", 100000);
 		}
+	}
+
+	//Message toaster
+	showMessage(message, style: string, dur?: number){
+		const toast = this.toastCtrl.create({
+	      message: message,
+	      showCloseButton: true,
+	      duration: dur || 5000,
+	      closeButtonText: 'Ok',
+	      cssClass: style,
+	      dismissOnPageChange: true
+	    });
+
+	    toast.present();
 	}
 
 }

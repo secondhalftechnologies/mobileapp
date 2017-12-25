@@ -45,9 +45,8 @@
 				<div *ngIf="!personal.controls.txt_dob.valid  && (personal.controls.txt_dob.dirty || submitAttempt)">
 					<p *ngIf="personal.controls.txt_dob.errors.required">Please enter a valid Date.</p>
 				</div>
-				<ion-item>
-					<ion-label floating>Age</ion-label>
-					{{personal.controls.txt_age.value}}
+				<ion-item *ngIf="personal.controls.txt_dob.value">
+					Age : {{personal.controls.txt_age.value}}
 				</ion-item>
 				<ion-item>
 					<ion-label floating>Mobile no.</ion-label>
