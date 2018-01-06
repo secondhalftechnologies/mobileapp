@@ -70,9 +70,9 @@ export class Forms {
 		}
 		else if(this.form_name == 'loan and liability'){
 			this.forms = [
-				{ title: 'Home Loan Details',     pageName: '', point: '0', icon : 'logo-usd'},
-				{ title: 'Financial Details',     pageName: '', point: '0', icon : 'cash'},
-				{ title: 'Financial History',     pageName: '', point: '0', icon : 'arrow-round-forward'},
+				{ title: 'Financial Details',     pageName: 'FinancialDetailsPage', point: '0', icon : 'cash'},
+				{ title: 'Financial History',     pageName: 'FinancialHistoryPage', point: '0', icon : 'arrow-round-forward'},
+				{ title: 'Loan Details',          pageName: 'FinancialLoanPage', point: '0', icon : 'logo-usd'},
 			];
 		}
 	}
